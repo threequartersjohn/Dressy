@@ -2,10 +2,16 @@ package com.example.dressy.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.dressy.R;
 
 public class Login extends AppCompatActivity {
+
+    private EditText txtUsername, txtPassword;
+    private Button btnLogin, btnRegister;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
