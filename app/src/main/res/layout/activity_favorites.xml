@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.Favorites">
+    tools:context=".activities.after_login.Favorites">
 
 </android.support.constraint.ConstraintLayout>

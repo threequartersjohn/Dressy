@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Dressy</string>
+    <string name="title_activity_password_change">PasswordChange</string>
 </resources>

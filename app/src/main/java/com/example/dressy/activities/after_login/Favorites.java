@@ -1,21 +1,18 @@
-package com.example.dressy.activities;
+package com.example.dressy.activities.after_login;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.EditText;
 
 import com.example.dressy.R;
 
-public class Login extends AppCompatActivity {
+public class Favorites extends AppCompatActivity {
 
-    private EditText txtUsername, txtPassword;
-    private Button btnLogin, btnRegister;
-
+    private Button btnHome, btnCloset, btnFavorites;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_favorites);
     }
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.dressy">
-
     <!-- PERMISSIONS -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -12,19 +11,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activities.after_login.Configurations"></activity>
+        <activity android:name=".activities.before_login.password.PasswordRequest" />
+        <activity android:name=".activities.before_login.password.PasswordChange" />
+
         <service
             android:name=".services.UserRegistrationService"
-            android:exported="false"></service>
+            android:exported="false" />
         <service
             android:name=".services.UserLoginService"
             android:exported="false" />
 
-        <activity android:name=".activities.Favorites" />
-        <activity android:name=".activities.Closet" />
-        <activity android:name=".activities.Home" />
-        <activity android:name=".activities.Register" />
-        <activity android:name=".activities.Login" />
-        <activity android:name=".activities.Launcher">
+        <activity android:name=".activities.after_login.Favorites" />
+        <activity android:name=".activities.after_login.Closet" />
+        <activity android:name=".activities.after_login.Home" />
+        <activity android:name=".activities.before_login.Register" />
+        <activity android:name=".activities.before_login.Login" />
+        <activity android:name=".activities.before_login.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

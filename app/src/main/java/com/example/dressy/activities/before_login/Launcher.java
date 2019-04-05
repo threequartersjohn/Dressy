@@ -1,4 +1,4 @@
-package com.example.dressy.activities;
+package com.example.dressy.activities.before_login;
 
 import android.app.AlertDialog;
 import android.content.Context;
