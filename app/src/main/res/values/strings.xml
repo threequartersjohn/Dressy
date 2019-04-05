@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">Dressy</string>
     <string name="title_activity_password_change">PasswordChange</string>
+    <string name="title_activity_home">Home</string>
+    <string name="title_closet">Closet</string>
+    <string name="title_home">Home</string>
+    <string name="title_favorites">Favorites</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_closet">Closet</string>
+    <string name="title_activity_favorites">Favorites</string>
+    <string name="title_activity_config">Config</string>
+    <string name="appName">Dressy</string>
+    <string name="configs">configs</string>
 </resources>

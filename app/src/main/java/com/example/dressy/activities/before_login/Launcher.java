@@ -16,6 +16,9 @@ public class Launcher extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //hides title bar
+        getSupportActionBar().hide();
     }
 
     //check for internet connection

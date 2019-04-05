@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.example.dressy.R;
 
-public class Closet extends AppCompatActivity {
+public class Config extends AppCompatActivity {
 
     private TextView mTextMessage;
 
@@ -36,7 +36,7 @@ public class Closet extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_closet);
+        setContentView(R.layout.activity_config);
 
         //hides title bar
         getSupportActionBar().hide();

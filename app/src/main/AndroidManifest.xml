@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.dressy">
+
     <!-- PERMISSIONS -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -11,7 +12,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.after_login.Configurations"></activity>
+        <meta-data
+            android:name="com.google.android.actions"
+            android:resource="@xml/shadowRect" />
+
+        <activity
+            android:name=".activities.after_login.Config"
+            android:label="@string/title_activity_config" />
+        <activity
+            android:name=".activities.after_login.Favorites"
+            android:label="@string/title_activity_favorites" />
+        <activity
+            android:name=".activities.after_login.Closet"
+            android:label="@string/title_activity_closet" />
+        <activity
+            android:name=".activities.after_login.Home"
+            android:label="@string/title_activity_home" />
         <activity android:name=".activities.before_login.password.PasswordRequest" />
         <activity android:name=".activities.before_login.password.PasswordChange" />
 
@@ -22,9 +38,6 @@
             android:name=".services.UserLoginService"
             android:exported="false" />
 
-        <activity android:name=".activities.after_login.Favorites" />
-        <activity android:name=".activities.after_login.Closet" />
-        <activity android:name=".activities.after_login.Home" />
         <activity android:name=".activities.before_login.Register" />
         <activity android:name=".activities.before_login.Login" />
         <activity android:name=".activities.before_login.Launcher">
