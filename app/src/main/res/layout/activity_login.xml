@@ -6,4 +6,71 @@
     android:layout_height="match_parent"
     tools:context=".activities.before_login.Login">
 
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="141dp"
+        tools:layout_editor_absoluteY="111dp"
+        tools:srcCompat="@tools:sample/avatars[2]" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="272dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_filled"
+        android:text="Button"
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp"
+        app:fontFamily="@font/weblysleekuisb"
+        tools:layout_editor_absoluteX="69dp"
+        tools:layout_editor_absoluteY="528dp" />
+
+    <EditText
+        android:id="@+id/txtEmail"
+        android:layout_width="272dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="69dp"
+        tools:layout_editor_absoluteY="360dp" />
+
+    <EditText
+        android:id="@+id/txtPassword"
+        android:layout_width="272dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword"
+        tools:layout_editor_absoluteX="69dp"
+        tools:layout_editor_absoluteY="432dp" />
+
+    <TextView
+        android:id="@+id/txtEmailLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email:"
+        android:textSize="18sp"
+        app:fontFamily="@font/weblysleekuil"
+        tools:layout_editor_absoluteX="69dp"
+        tools:layout_editor_absoluteY="329dp" />
+
+    <TextView
+        android:id="@+id/txtPasswordLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Palavra passe:"
+        android:textSize="18sp"
+        app:fontFamily="@font/weblysleekuil"
+        tools:layout_editor_absoluteX="69dp"
+        tools:layout_editor_absoluteY="405dp" />
+
+    <TextView
+        android:id="@+id/txtNovaPasswordLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Esqueceu-se da sua palavra-passe?"
+        app:fontFamily="@font/webly_sleek"
+        tools:layout_editor_absoluteX="133dp"
+        tools:layout_editor_absoluteY="477dp" />
+
 </android.support.constraint.ConstraintLayout>

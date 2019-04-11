@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.actions"
-            android:resource="@xml/shadowRect" />
+            android:resource="@drawable/shadow_rect" />
 
         <activity
             android:name=".activities.after_login.Config"
