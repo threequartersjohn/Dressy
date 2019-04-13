@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "52871640735",
+    "firebase_url": "https://dressy-c4df8.firebaseio.com",
+    "project_id": "dressy-c4df8",
+    "storage_bucket": "dressy-c4df8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:52871640735:android:c294b3022b0aa7ba",
+        "android_client_info": {
+          "package_name": "com.example.dressy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "52871640735-mpm2vbu3oinc68ka4c52u6eo7o2l49h2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dressy",
+            "certificate_hash": "d0ef9434dd0131c8fe8b238fd26f0f3b911549b2"
+          }
+        },
+        {
+          "client_id": "52871640735-6ocp6qengt3l7pkpr1n42vh73qovbsji.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKOFTc-t3a9MD6Hd408E8pSqTKjEw50Sg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "52871640735-6ocp6qengt3l7pkpr1n42vh73qovbsji.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,4 @@
-package com.example.dressy.activities.after_login;
+package com.example.dressy.activities;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.example.dressy.R;
 
-public class Favorites extends AppCompatActivity {
+public class Config extends AppCompatActivity {
 
     private TextView mTextMessage;
 
@@ -36,7 +36,10 @@ public class Favorites extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_favorites);
+        setContentView(R.layout.activity_config);
+
+        //hides title bar
+        getSupportActionBar().hide();
 
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);

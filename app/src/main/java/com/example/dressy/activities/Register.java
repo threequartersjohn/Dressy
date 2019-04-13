@@ -1,4 +1,4 @@
-package com.example.dressy.activities.before_login;
+package com.example.dressy.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,20 +7,17 @@ import android.widget.EditText;
 
 import com.example.dressy.R;
 
-public class Login extends AppCompatActivity {
+public class Register extends AppCompatActivity {
 
-    private EditText txtUsername, txtPassword;
-    private Button btnLogin, btnRegister;
-
+    private EditText txtName, txtUsername, txtPassword, txtRepeatPassword;
+    private Button btnRegister, btnReturn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register);
 
         //hides title bar
         getSupportActionBar().hide();
     }
-
-
 }

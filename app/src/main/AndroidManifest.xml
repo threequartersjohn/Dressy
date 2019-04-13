@@ -4,6 +4,9 @@
 
     <!-- PERMISSIONS -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true" />
+
 
     <application
         android:allowBackup="true"
@@ -17,19 +20,25 @@
             android:resource="@drawable/shadow_rect" />
 
         <activity
-            android:name=".activities.after_login.Config"
+            android:name=".activities.Config"
             android:label="@string/title_activity_config" />
         <activity
-            android:name=".activities.after_login.Favorites"
+            android:name=".activities.Favorites"
             android:label="@string/title_activity_favorites" />
         <activity
-            android:name=".activities.after_login.Closet"
-            android:label="@string/title_activity_closet" />
+            android:name=".activities.Closet"
+            android:label="@string/title_activity_closet">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
-            android:name=".activities.after_login.Home"
+            android:name=".activities.Home"
             android:label="@string/title_activity_home" />
-        <activity android:name=".activities.before_login.password.PasswordRequest" />
-        <activity android:name=".activities.before_login.password.PasswordChange" />
+        <activity android:name=".activities.PasswordRequest" />
+        <activity android:name=".activities.PasswordChange" />
 
         <service
             android:name=".services.UserRegistrationService"
@@ -37,15 +46,14 @@
         <service
             android:name=".services.UserLoginService"
             android:exported="false" />
+        <service
+            android:name=".services.UploadNewItemPhoto"
+            android:exported="false" />
 
-        <activity android:name=".activities.before_login.Register" />
-        <activity android:name=".activities.before_login.Login" />
-        <activity android:name=".activities.before_login.Launcher">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".activities.Register" />
+        <activity android:name=".activities.Login" />
+        <activity android:name=".activities.Launcher">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

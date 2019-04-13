@@ -1,4 +1,4 @@
-package com.example.dressy.activities.after_login;
+package com.example.dressy.activities;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
