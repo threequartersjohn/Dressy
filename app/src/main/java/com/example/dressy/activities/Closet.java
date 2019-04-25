@@ -71,7 +71,6 @@ public class Closet extends AppCompatActivity {
         }
     }
 
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //new item photo service result
         if (requestCode == REQUEST_NEW_ITEM_PHOTO && resultCode == RESULT_OK) {

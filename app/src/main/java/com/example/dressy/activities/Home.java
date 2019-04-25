@@ -3,33 +3,41 @@ package com.example.dressy.activities;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.dressy.R;
+import com.example.dressy.fragments.homeFragment;
 
 public class Home extends AppCompatActivity {
 
     private TextView mTextMessage;
+    private static final String TAG = "Home";
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+            Fragment selectedFragment = null;
+
+
             switch (item.getItemId()) {
                 case R.id.navCloset:
-                    mTextMessage.setText(R.string.title_closet);
-                    return true;
+                    selectedFragment = new homeFragment();
+                    break;
                 case R.id.navHome:
-                    mTextMessage.setText(R.string.title_home);
-                    return true;
+                    break;
                 case R.id.navFavorites:
-                    mTextMessage.setText(R.string.title_favorites);
-                    return true;
+                    break;
             }
-            return false;
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, selectedFragment).commit();
+
+            return true;
         }
     };
 
