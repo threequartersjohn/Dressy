@@ -11,13 +11,19 @@ import com.example.dressy.classes.Photo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
+import java.util.UUID;
 
 public class UploadNewItemPhoto extends IntentService {
 
@@ -37,13 +43,12 @@ public class UploadNewItemPhoto extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
-
-        storageReference = FirebaseStorage.getInstance().getReference().child("new image");
-        database = FirebaseDatabase.getInstance().getReference();
-
         Bitmap photo = intent.getParcelableExtra("photo");
         final String user_id = intent.getStringExtra("user_id");
         final String type = intent.getStringExtra("type");
+
+        storageReference = FirebaseStorage.getInstance().getReference().child(UUID.randomUUID().toString());
+        database = FirebaseDatabase.getInstance().getReference();
 
         //converte bitmap para bytes
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -74,8 +79,19 @@ public class UploadNewItemPhoto extends IntentService {
 
 
     protected void savePhotoToDatabase(String url, String user, String type){
-        Photo photo = new Photo(user, url, type);
-        database.child("photo_collection").push().setValue(photo);
+
+        Photo photo = new Photo(url, type);
+
+        database.child(user).push().setValue(photo, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                if (databaseError != null) {
+                    System.out.println("Data could not be saved " + databaseError.getMessage());
+                } else {
+                    System.out.println("Data saved successfully.");
+                }
+            }
+        });
         resultIntent.putExtra("success", true);
     }
 

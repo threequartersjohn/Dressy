@@ -2,13 +2,27 @@ package com.example.dressy.classes;
 
 public class Photo {
 
-    private String user_id, photo_url, type;
+    private String photo_url, type;
 
     public Photo() { }
 
-    public Photo(String user_id, String photo_url, String type) {
-        this.user_id = user_id;
+    public Photo(String photo_url, String type) {
         this.photo_url = photo_url;
+        this.type = type;
+    }
+    public String getPhoto_url() {
+        return photo_url;
+    }
+
+    public void setPhoto_url(String photo_url) {
+        this.photo_url = photo_url;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
         this.type = type;
     }
 }
