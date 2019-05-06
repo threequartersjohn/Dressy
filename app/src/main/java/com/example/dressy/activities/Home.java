@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.dressy.R;
+import com.example.dressy.fragments.closetFragment;
+import com.example.dressy.fragments.favoritesFragment;
 import com.example.dressy.fragments.homeFragment;
 
 public class Home extends AppCompatActivity {
@@ -24,14 +26,15 @@ public class Home extends AppCompatActivity {
 
             Fragment selectedFragment = null;
 
-
             switch (item.getItemId()) {
                 case R.id.navCloset:
                     selectedFragment = new homeFragment();
                     break;
                 case R.id.navHome:
+                    selectedFragment = new closetFragment();
                     break;
                 case R.id.navFavorites:
+                    selectedFragment = new favoritesFragment();
                     break;
             }
 

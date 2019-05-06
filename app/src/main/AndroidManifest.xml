@@ -20,16 +20,6 @@
             android:resource="@drawable/shadow_rect" />
 
         <activity
-            android:name=".activities.Config"
-            android:label="@string/title_activity_config" />
-        <activity
-            android:name=".activities.Favorites"
-            android:label="@string/title_activity_favorites" />
-        <activity
-            android:name=".activities.Closet"
-            android:label="@string/title_activity_closet">
-        </activity>
-        <activity
             android:name=".activities.Home"
             android:label="@string/title_activity_home">
             <intent-filter>
