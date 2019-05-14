@@ -77,7 +77,6 @@ public class UploadNewItemPhoto extends IntentService {
                 });
     }
 
-
     protected void savePhotoToDatabase(String url, String user, String type){
 
         Photo photo = new Photo(url, type);
