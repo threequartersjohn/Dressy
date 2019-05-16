@@ -17,6 +17,7 @@ public class Login extends AppCompatActivity {
     private Button btnLogin, btnRegister;
     final String dressyLogTag = "dressylogs";
     final int minimumPasswordLength  = 6;
+    //comentario
 
 
     @Override
