@@ -12,14 +12,21 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.dressy.R;
+import com.example.dressy.classes.Photo;
 import com.example.dressy.fragments.closetFragment;
 import com.example.dressy.fragments.favoritesFragment;
 import com.example.dressy.fragments.homeFragment;
+import com.google.firebase.database.DatabaseReference;
+
+import java.util.List;
 
 public class Home extends AppCompatActivity {
 
     private TextView mTextMessage;
-    private static final String TAG = "Home";
+    private String TAG = "dressyLogs";
+    private List<Photo> photos;
+    private DatabaseReference databaseReference;
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -31,11 +38,11 @@ public class Home extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.navCloset:
-                    selectedFragment = new homeFragment();
+                    selectedFragment = new closetFragment();
                     switchIcons(R.id.navCloset);
                     break;
                 case R.id.navHome:
-                    selectedFragment = new closetFragment();
+                    selectedFragment = new homeFragment();
                     switchIcons(R.id.navHome);
                     break;
                 case R.id.navFavorites:
@@ -61,6 +68,15 @@ public class Home extends AppCompatActivity {
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new homeFragment()).commit();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+
     }
 
     private void switchIcons(Integer ID){

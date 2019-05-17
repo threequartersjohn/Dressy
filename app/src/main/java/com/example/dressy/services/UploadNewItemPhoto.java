@@ -62,9 +62,12 @@ public class UploadNewItemPhoto extends IntentService {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         Log.d(dressyLogTag, "success on upload!!");
-
-                        Task<Uri> url = taskSnapshot.getMetadata().getReference().getDownloadUrl();
-                        savePhotoToDatabase(url.toString(), user_id, type);
+                        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                savePhotoToDatabase(uri.toString(), user_id, type);
+                            }
+                        });
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
