@@ -31,7 +31,7 @@ public class Home extends AppCompatActivity {
     private TextView mTextMessage;
     private String TAG = "dressyLogs";
     private DatabaseReference databaseReference;
-    private List<Photo> photos = new ArrayList<>();
+    public static List<Photo> photos = new ArrayList<>();
 
     public static String user_id = "admin";
 
@@ -98,7 +98,7 @@ public class Home extends AppCompatActivity {
                     photos.add(photo);
                 }
 
-                Log.d(TAG, photos.toString());
+                Log.d(TAG, String.valueOf(photos.size()) );
             }
 
             @Override

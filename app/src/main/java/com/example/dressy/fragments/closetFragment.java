@@ -10,6 +10,7 @@ import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -20,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dressy.R;
@@ -32,23 +34,26 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import static android.app.Activity.RESULT_OK;
+import static com.example.dressy.activities.Home.photos;
 import static com.example.dressy.activities.Home.user_id;
 
 public class closetFragment extends Fragment
 {
 
     static final int REQUEST_NEW_ITEM_PHOTO = 1;
-    static final String dressyLogTag = "dressylogs";
+    static final String TAG = "dressylogs";
     static final FirebaseDatabase database = FirebaseDatabase.getInstance();
     static final DatabaseReference ref = database.getReference("photo_collection");
+    private View rootView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_closet, container, false);
+        rootView = inflater.inflate(R.layout.fragment_closet, container, false);
         Button button = rootView.findViewById(R.id.btnNewPhoto);
 
         button.setOnClickListener(new View.OnClickListener(){
@@ -58,7 +63,19 @@ public class closetFragment extends Fragment
             }
         });
 
+
+
         return rootView;
+    }
+
+    private void populateWithPhotos(){
+        for (Photo photo: photos){
+            ConstraintLayout cl = rootView.findViewById(R.id.closetLayout);
+            ImageView imageView = new ImageView(getActivity());
+            cl.addView(imageView);
+            Log.d(TAG, "tried to add image view to layout");
+            Picasso.get().load(photo.getPhoto_url()).into((imageView));
+        }
     }
 
     public void requestNewItemPhoto(View  view){
@@ -88,7 +105,7 @@ public class closetFragment extends Fragment
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d(dressyLogTag, "save photo result: " + intent.getBooleanExtra("success", false));
+            Log.d(TAG, "save photo result: " + intent.getBooleanExtra("success", false));
         }
     };
 
