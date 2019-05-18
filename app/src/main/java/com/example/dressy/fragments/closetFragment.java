@@ -34,6 +34,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import static android.app.Activity.RESULT_OK;
+import static com.example.dressy.activities.Home.user_id;
 
 public class closetFragment extends Fragment
 {
@@ -76,7 +77,7 @@ public class closetFragment extends Fragment
 
             Intent intent = new Intent(getActivity(), UploadNewItemPhoto.class);
             intent.putExtra("photo", newItemPhoto);
-            intent.putExtra("user_id", "admin");
+            intent.putExtra("user_id", user_id );
             intent.putExtra("type", "t-shirt");
             getActivity().startService(intent);
         }

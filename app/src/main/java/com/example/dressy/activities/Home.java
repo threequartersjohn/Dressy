@@ -7,6 +7,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -16,16 +17,23 @@ import com.example.dressy.classes.Photo;
 import com.example.dressy.fragments.closetFragment;
 import com.example.dressy.fragments.favoritesFragment;
 import com.example.dressy.fragments.homeFragment;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Home extends AppCompatActivity {
 
     private TextView mTextMessage;
     private String TAG = "dressyLogs";
-    private List<Photo> photos;
     private DatabaseReference databaseReference;
+    private List<Photo> photos = new ArrayList<>();
+
+    public static String user_id = "admin";
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -65,6 +73,8 @@ public class Home extends AppCompatActivity {
         //hides title bar
         getSupportActionBar().hide();
 
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(user_id);
+
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -76,6 +86,26 @@ public class Home extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d(TAG, "reached on data change!!");
+                for(DataSnapshot  ds: dataSnapshot.getChildren()){
+                    Photo photo = new Photo();
+                    photo.setPhoto_url(ds.child("photo_url").getValue().toString());
+                    photo.setType(ds.child("type").getValue().toString());
+                    Log.d(TAG, photo.getPhoto_url());
+                    photos.add(photo);
+                }
+
+                Log.d(TAG, photos.toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d(TAG, "[NETWORK.Database] Unexpected error occured while fetching database content: " + databaseError.getMessage());
+            }
+        });
 
     }
 
