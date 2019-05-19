@@ -109,6 +109,12 @@ public class closetFragment extends Fragment
         }
     };
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        populateWithPhotos();
+    }
+
     public void onResume(){
         super.onResume();
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(bReceiver, new IntentFilter("upload_new_item_photo_result"));

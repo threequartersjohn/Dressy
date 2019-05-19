@@ -86,6 +86,7 @@ public class Home extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        //load photo references from database
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
