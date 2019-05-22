@@ -75,12 +75,14 @@ public class Home extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child(user_id);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        mTextMessage = findViewById(R.id.message);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new homeFragment()).commit();
     }
+
+
 
     @Override
     protected void onStart() {
@@ -90,7 +92,7 @@ public class Home extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.d(TAG, "reached on data change!!");
+                Log.d(TAG, "~Reached onDataChange event.");
                 for(DataSnapshot  ds: dataSnapshot.getChildren()){
                     Photo photo = new Photo();
                     photo.setPhoto_url(ds.child("photo_url").getValue().toString());
@@ -104,7 +106,7 @@ public class Home extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.d(TAG, "[NETWORK.Database] Unexpected error occured while fetching database content: " + databaseError.getMessage());
+                Log.d(TAG, "[NETWORK.Database] Unexpected error occurred while fetching database content: " + databaseError.getMessage());
             }
         });
 

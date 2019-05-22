@@ -7,6 +7,14 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.dressy.classes.Photo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -19,10 +27,13 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class UploadNewItemPhoto extends IntentService {
@@ -93,7 +104,64 @@ public class UploadNewItemPhoto extends IntentService {
                 }
             }
         });
+
+        requestVisionData(url);
         resultIntent.putExtra("success", true);
+    }
+
+    private void requestVisionData(String imageUrl){
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "https://language.googleapis.com/v1/documents:analyzeEntities?key=AIzaSyAzkHaJQ3KYhyvn_sI5_plpjAOwmRvBpnc";
+
+        JSONObject request  = new JSONObject();
+        JSONArray requestArray = new JSONArray();
+        JSONObject image  = new JSONObject();
+        JSONObject source = new JSONObject();
+        JSONObject imageFather  = new JSONObject();
+        JSONObject features  = new JSONObject();
+        JSONObject featuresFather = new JSONObject();
+
+        try{
+
+            Log.d(dressyLogTag, "Building JSON");
+            source.put("imageUri", imageUrl);
+            image.put("source", source);
+            imageFather.put("image", image);
+
+            features.put("type", "LABEL_DETECTION");
+            features.put("maxResults", 1);
+            featuresFather.put("features", features);
+
+            requestArray.put(imageFather);
+            requestArray.put(featuresFather);
+            request.put("request", requestArray);
+
+            Log.d(dressyLogTag, "JSON to send:");
+            Log.d(dressyLogTag, request.toString());
+
+        } catch(JSONException error){
+            Log.d(dressyLogTag, "[JSON] Unexpected error building JSON object: " + error.getMessage());
+        }
+
+        Log.d(dressyLogTag, "Attempting Request");
+
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, request, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d(dressyLogTag, "Response received from Vision API");
+                Log.d(dressyLogTag, response.toString());
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(dressyLogTag, "[UPLOAD.Vision] Unexpected error uploading image to Vision API.");
+                Log.d(dressyLogTag, error.toString());
+            }
+        });
+
+        queue.add(jsonRequest);
     }
 
 }
