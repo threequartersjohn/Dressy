@@ -63,8 +63,6 @@ public class closetFragment extends Fragment
             }
         });
 
-
-
         return rootView;
     }
 

@@ -29,6 +29,4 @@ public class homeFragment extends Fragment {
     private void loadImages(){
 
     }
-
-
 }

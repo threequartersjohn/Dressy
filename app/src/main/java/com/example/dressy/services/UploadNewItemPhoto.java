@@ -32,8 +32,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 public class UploadNewItemPhoto extends IntentService {
@@ -112,7 +110,7 @@ public class UploadNewItemPhoto extends IntentService {
     private void requestVisionData(String imageUrl){
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://language.googleapis.com/v1/documents:analyzeEntities?key=AIzaSyAzkHaJQ3KYhyvn_sI5_plpjAOwmRvBpnc";
+        String url = "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyAzkHaJQ3KYhyvn_sI5_plpjAOwmRvBpnc";
 
         JSONObject request  = new JSONObject();
         JSONArray requestArray = new JSONArray();
@@ -122,7 +120,7 @@ public class UploadNewItemPhoto extends IntentService {
         JSONObject features  = new JSONObject();
         JSONObject featuresFather = new JSONObject();
 
-        try{
+        try {
 
             Log.d(dressyLogTag, "Building JSON");
             source.put("imageUri", imageUrl);
