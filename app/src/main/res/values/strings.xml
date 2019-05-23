@@ -12,4 +12,7 @@
     <string name="title_activity_config">Config</string>
     <string name="appName">Dressy</string>
     <string name="configs">configs</string>
+    <string name="btnRegister">Button</string>
+    <string name="imgLogo">imgLogo</string>
+    <string name="txtEmailLabel">TextView</string>
 </resources>
