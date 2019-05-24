@@ -15,4 +15,6 @@
     <string name="btnRegister">Button</string>
     <string name="imgLogo">imgLogo</string>
     <string name="txtEmailLabel">TextView</string>
+    <string name="minimun_password">A password tem de ter mais de 6 caracteres!</string>
+    <string name="auth_failed">Autenticação falhou!</string>
 </resources>

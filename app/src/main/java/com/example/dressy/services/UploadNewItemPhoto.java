@@ -42,7 +42,6 @@ public class UploadNewItemPhoto extends IntentService {
     private int photoQuality = 90;
     private Intent resultIntent = new Intent("upload_new_item_photo_result");
 
-
     public UploadNewItemPhoto() {
         super("UploadNewItemPhoto");
     }
@@ -88,7 +87,7 @@ public class UploadNewItemPhoto extends IntentService {
                 });
     }
 
-    protected void savePhotoToDatabase(String url, String user, String type){
+    protected void savePhotoToDatabase(final String url, String user, String type){
 
         Photo photo = new Photo(url, type);
 
@@ -99,15 +98,18 @@ public class UploadNewItemPhoto extends IntentService {
                     System.out.println("Data could not be saved " + databaseError.getMessage());
                 } else {
                     System.out.println("Data saved successfully.");
+                    requestVisionData(url);
                 }
             }
         });
 
-        requestVisionData(url);
+
         resultIntent.putExtra("success", true);
     }
 
     private void requestVisionData(String imageUrl){
+
+        Log.d(dressyLogTag, "Requesting Vision data.");
 
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyAzkHaJQ3KYhyvn_sI5_plpjAOwmRvBpnc";

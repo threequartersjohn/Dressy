@@ -42,12 +42,6 @@
         <activity android:name=".activities.Launcher"/>
 
         <service
-            android:name=".services.UserRegistrationService"
-            android:exported="false" />
-        <service
-            android:name=".services.UserLoginService"
-            android:exported="false" />
-        <service
             android:name=".services.UploadNewItemPhoto"
             android:exported="false" />
 

@@ -33,11 +33,10 @@ public class Register extends AppCompatActivity {
 
         //ainda n existe layout para isto
         //variaveis
-        btnReturn = (Button) findViewById(R.id.btnReturn);
+        //btnReturn = (Button) findViewById(R.id.btn);
         btnRegister = (Button) findViewById(R.id.btnRegister);
         txtName = (EditText) findViewById(R.id.txtName);
-        txtUsername = (EditText) findViewById(R.id.txtUsername);
-        txtEmail = (EditText) findViewById(R.id.txtName);
+        txtEmail = (EditText) findViewById(R.id.txtEmail);
         txtPassword = (EditText) findViewById(R.id.txtPassword);
         txtRepeatPassword = (EditText) findViewById(R.id.txtRepeatPassword);
 
@@ -89,10 +88,11 @@ public class Register extends AppCompatActivity {
 
 
                 //criar o utilizador
-                auth.createUserWithEmailAndPassword(username, password) .addOnCompleteListener(Register.this, new OnCompleteListener<AuthResult>() {
+                auth.createUserWithEmailAndPassword(username, password).addOnCompleteListener(Register.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Toast.makeText(Register.this, "UtilizadorCriadoComSucesso:onComplete" + task.isSuccessful().show();
+                        Toast.makeText(Register.this, "UtilizadorCriadoComSucesso:onComplete" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
+
                         //Se falhar manda toast
                         if(!task.isSuccessful()){
                             Toast.makeText(Register.this, "A autenticação falhou!" + task.getException(), Toast.LENGTH_SHORT).show();

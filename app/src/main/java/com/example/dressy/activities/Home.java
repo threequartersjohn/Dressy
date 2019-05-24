@@ -23,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +33,24 @@ public class Home extends AppCompatActivity {
     private String TAG = "dressyLogs";
     private DatabaseReference databaseReference;
     public static List<Photo> photos = new ArrayList<>();
-
+    private List<String[]> categories = new ArrayList<>();
     public static String user_id = "admin";
 
+    private void populateCategories(){
+
+        categories.add(new String[] {"Jeans", "pants"});
+        categories.add(new String[] {"Trousers", "pants"});
+
+        categories.add(new String[] {"Footwear", "shoes"});
+        categories.add(new String[] {"Shoe", "shoe"});
+
+        categories.add(new String[] {"Sweater", "sweater"});
+        categories.add(new String[] {"Long-sleeved t-shirt", "sweater"});
+        categories.add(new String[] {"Blouse", "sweater"});
+
+        categories.add(new String[] {"Jacket", "jacket"});
+
+    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -80,6 +96,8 @@ public class Home extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new homeFragment()).commit();
+
+        populateCategories();
     }
 
 
@@ -97,7 +115,6 @@ public class Home extends AppCompatActivity {
                     Photo photo = new Photo();
                     photo.setPhoto_url(ds.child("photo_url").getValue().toString());
                     photo.setType(ds.child("type").getValue().toString());
-                    Log.d(TAG, photo.getPhoto_url());
                     photos.add(photo);
                 }
 

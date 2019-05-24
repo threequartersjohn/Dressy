@@ -26,8 +26,8 @@ public class PasswordChange extends AppCompatActivity {
         setContentView(R.layout.activity_password_change2);
 
         txtEmail = (EditText) findViewById(R.id.txtName);
-        btnSubmit = (Button) findViewById(R.id.btnSubmit);
-        btnBack = (Button) findViewById(R.id.btnBack);
+        //btnSubmit = (Button) findViewById(R.id.btnSubmit);
+        //btnBack = (Button) findViewById(R.id.btnBack);
 
         auth = FirebaseAuth.getInstance();
 

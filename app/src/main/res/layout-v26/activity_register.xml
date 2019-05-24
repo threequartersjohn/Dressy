@@ -57,7 +57,7 @@
         android:contentDescription="@string/imgLogo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/logoDressy" />
+        tools:srcCompat="@drawable/logo_dressy" />
 
     <TextView
         android:id="@+id/txtNameLabel"
