@@ -112,9 +112,11 @@ public class Home extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Log.d(TAG, "~Reached onDataChange event.");
                 for(DataSnapshot  ds: dataSnapshot.getChildren()){
+                    String[] labels = new String[10];
+
                     Photo photo = new Photo();
                     photo.setPhoto_url(ds.child("photo_url").getValue().toString());
-                    photo.setType(ds.child("type").getValue().toString());
+                    //photo.setLabels(ds.child("").getValue().toString());
                     photos.add(photo);
                 }
 
