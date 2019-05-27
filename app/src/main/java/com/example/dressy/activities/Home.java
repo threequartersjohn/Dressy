@@ -1,16 +1,13 @@
 package com.example.dressy.activities;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.example.dressy.R;
 import com.example.dressy.classes.Photo;
@@ -23,35 +20,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Home extends AppCompatActivity {
 
-    private TextView mTextMessage;
+    public static List<Photo> photos = new ArrayList<>();
+    public static String user_id = "admin";
     private String TAG = "dressyLogs";
     private DatabaseReference databaseReference;
-    public static List<Photo> photos = new ArrayList<>();
     private List<String[]> categories = new ArrayList<>();
-    public static String user_id = "admin";
-
-    private void populateCategories(){
-
-        categories.add(new String[] {"Jeans", "pants"});
-        categories.add(new String[] {"Trousers", "pants"});
-
-        categories.add(new String[] {"Footwear", "shoes"});
-        categories.add(new String[] {"Shoe", "shoe"});
-
-        categories.add(new String[] {"Sweater", "sweater"});
-        categories.add(new String[] {"Long-sleeved t-shirt", "sweater"});
-        categories.add(new String[] {"Blouse", "sweater"});
-
-        categories.add(new String[] {"Jacket", "jacket"});
-
-    }
-
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -91,15 +69,12 @@ public class Home extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child(user_id);
 
-        mTextMessage = findViewById(R.id.message);
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new homeFragment()).commit();
 
-        populateCategories();
     }
-
 
 
     @Override
@@ -110,17 +85,15 @@ public class Home extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.d(TAG, "~Reached onDataChange event.");
-                for(DataSnapshot  ds: dataSnapshot.getChildren()){
-                    String[] labels = new String[10];
-
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Photo photo = new Photo();
+
                     photo.setPhoto_url(ds.child("photo_url").getValue().toString());
-                    //photo.setLabels(ds.child("").getValue().toString());
+                    photo.setType(ds.child("type").getValue().toString());
+
                     photos.add(photo);
                 }
 
-                Log.d(TAG, String.valueOf(photos.size()) );
             }
 
             @Override
@@ -131,7 +104,7 @@ public class Home extends AppCompatActivity {
 
     }
 
-    private void switchIcons(Integer ID){
+    private void switchIcons(Integer ID) {
         BottomNavigationView navigation = findViewById(R.id.navigation);
         Menu menu = navigation.getMenu();
         MenuItem home = menu.findItem(R.id.navHome);
@@ -149,13 +122,14 @@ public class Home extends AppCompatActivity {
                 favorites.setIcon(R.drawable.baseline_favorite_black_18dp);
                 closet.setIcon(R.drawable.outline_photo_library_black_18dp);
                 break;
-                case R.id.navCloset:
+            case R.id.navCloset:
                 home.setIcon(R.drawable.outline_home_black_18dp);
                 favorites.setIcon(R.drawable.outline_favorite_border_black_18dp);
                 closet.setIcon(R.drawable.baseline_photo_library_black_18dp);
                 break;
 
-            }
         }
+    }
 
 }
+

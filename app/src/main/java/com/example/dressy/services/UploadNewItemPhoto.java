@@ -7,19 +7,15 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.dressy.classes.Photo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -32,8 +28,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.lang.reflect.Array;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class UploadNewItemPhoto extends IntentService {
@@ -49,7 +45,7 @@ public class UploadNewItemPhoto extends IntentService {
         super("UploadNewItemPhoto");
     }
 
-    static final String dressyLogTag = "dressylogs";
+    static final String dressyLogTag = "dressyLogs";
 
     @Override
     protected void onHandleIntent(Intent intent) {
@@ -66,8 +62,6 @@ public class UploadNewItemPhoto extends IntentService {
         photo.compress(Bitmap.CompressFormat.JPEG, photoQuality, baos);
         byte[] data = baos.toByteArray();
 
-        Log.d(dressyLogTag, "trying to upload!");
-
         storageReference.putBytes(data)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -83,16 +77,15 @@ public class UploadNewItemPhoto extends IntentService {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
-
                         Log.d(dressyLogTag, "didn't work :(!");
                         resultIntent.putExtra("success", false);
                     }
                 });
     }
 
-    protected void savePhotoToDatabase(final String url, String user, String[] labels){
+    protected void savePhotoToDatabase(final String url, String user, String type){
 
-        Photo photo = new Photo(url, Arrays.asList(labels));
+        Photo photo = new Photo(url, type);
 
         database.child(user).push().setValue(photo, new DatabaseReference.CompletionListener() {
             @Override
@@ -112,8 +105,6 @@ public class UploadNewItemPhoto extends IntentService {
     private void requestVisionData(final String imageUrl){
 
         Log.d(dressyLogTag, "Requesting Vision data.");
-        Log.d(dressyLogTag, "URL: " + imageUrl);
-
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyAzkHaJQ3KYhyvn_sI5_plpjAOwmRvBpnc";
 
@@ -126,8 +117,6 @@ public class UploadNewItemPhoto extends IntentService {
         JSONArray featuresFather = new JSONArray();
 
         try {
-
-            Log.d(dressyLogTag, "Building JSON");
             source.put("imageUri", imageUrl.replace("\\", ""));
             image.put("source", source);
 
@@ -146,8 +135,6 @@ public class UploadNewItemPhoto extends IntentService {
         } catch(JSONException error){
             Log.d(dressyLogTag, "[JSON] Unexpected error building JSON object: " + error.getMessage());
         }
-
-        Log.d(dressyLogTag, "Attempting Request");
 
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, request, new Response.Listener<JSONObject>() {
             @Override
@@ -170,7 +157,7 @@ public class UploadNewItemPhoto extends IntentService {
 
 
 
-                savePhotoToDatabase(imageUrl, user_id, parseLabels(labels));
+                savePhotoToDatabase(imageUrl, user_id, categorize(labels));
 
             }
         }, new Response.ErrorListener() {
@@ -185,24 +172,45 @@ public class UploadNewItemPhoto extends IntentService {
         queue.add(jsonRequest);
     }
 
-    private String[] parseLabels(JSONArray labels){
-        String[] result = new String[10];
-        JSONObject label = new JSONObject();
+    private String categorize(JSONArray labels) {
+        String result = "ERROR";
+        JSONObject label;
+        List<String[]> categories = new ArrayList<>();
 
-        for (int x = 0; x<10; x++){
+        categories.add(new String[] {"Jeans", "pants"});
+        categories.add(new String[] {"Trousers", "pants"});
 
-            try{
-                label = labels.getJSONObject(x);
-                result[x] = label.get("description").toString();
+        categories.add(new String[] {"Footwear", "shoes"});
+        categories.add(new String[] {"Shoe", "shoes"});
+        categories.add(new String[] {"Sneakers", "shoes"});
 
-            } catch (JSONException error) {
-                Log.d(dressyLogTag, "[JSON] Unexpected error parsing JSON object: " + error.getMessage());
+        categories.add(new String[] {"Sweater", "sweater"});
+        categories.add(new String[] {"Long-sleeved t-shirt", "sweater"});
+        categories.add(new String[] {"T-shirt", "sweater"});
+        categories.add(new String[] {"Blouse", "sweater"});
+
+        categories.add(new String[] {"Jacket", "jacket"});
+
+            forloop: {
+                for (int x = 0; x<labels.length(); x++){
+
+                    try{
+                        label = labels.getJSONObject(x);
+                        for (int i = 0; i<categories.size(); i++){
+                            Log.d(dressyLogTag, categories.get(i)[0]);
+                            Log.d(dressyLogTag, label.get("description").toString());
+                            if(label.get("description").toString().equals(categories.get(i)[0])){
+                                result = categories.get(i)[0];
+                                break forloop;
+                            }
+                        }
+                    } catch (JSONException error) {
+                        Log.d(dressyLogTag, "[JSON] Unexpected error parsing JSON object: " + error.getMessage());
+                    }
+                }
             }
-        }
 
-        Log.d(dressyLogTag, result.toString());
-
-        return result;
+        return(result);
     }
 
 }
