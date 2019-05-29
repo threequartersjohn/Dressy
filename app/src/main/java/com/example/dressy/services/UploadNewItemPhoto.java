@@ -3,6 +3,7 @@ package com.example.dressy.services;
 import android.app.IntentService;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -50,7 +51,7 @@ public class UploadNewItemPhoto extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        Bitmap photo = intent.getParcelableExtra("photo");
+        Bitmap photo = BitmapFactory.decodeFile(intent.getStringExtra("photo"));
         user_id = intent.getStringExtra("user_id");
         final String type = intent.getStringExtra("type");
 
@@ -61,6 +62,8 @@ public class UploadNewItemPhoto extends IntentService {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         photo.compress(Bitmap.CompressFormat.JPEG, photoQuality, baos);
         byte[] data = baos.toByteArray();
+
+        Log.d(dressyLogTag, "Image file size: " + photo.getByteCount());
 
         storageReference.putBytes(data)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {

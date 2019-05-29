@@ -25,8 +25,6 @@ public class Launcher extends AppCompatActivity {
 
     //check for internet connection
     //app does not work without internet connection
-
-
     @Override
     protected void onStart() {
         super.onStart();

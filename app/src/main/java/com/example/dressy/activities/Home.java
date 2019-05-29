@@ -81,19 +81,25 @@ public class Home extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        loadDataFromDatabase();
+
+    }
+
+    public void loadDataFromDatabase(){
         //load photo references from database
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Photo> tempPhotoHolder = new ArrayList<>();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Photo photo = new Photo();
 
                     photo.setPhoto_url(ds.child("photo_url").getValue().toString());
                     photo.setType(ds.child("type").getValue().toString());
 
-                    photos.add(photo);
+                    tempPhotoHolder.add(photo);
                 }
-
+                photos = new ArrayList<>(tempPhotoHolder);
             }
 
             @Override
@@ -101,7 +107,6 @@ public class Home extends AppCompatActivity {
                 Log.d(TAG, "[NETWORK.Database] Unexpected error occurred while fetching database content: " + databaseError.getMessage());
             }
         });
-
     }
 
     private void switchIcons(Integer ID) {
