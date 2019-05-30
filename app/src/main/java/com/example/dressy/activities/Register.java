@@ -18,8 +18,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class Register extends AppCompatActivity {
 
-    private EditText txtName, txtUsername, txtEmail, txtPassword, txtRepeatPassword;
-    private Button btnRegister, btnReturn;
+    private EditText txtName, txtEmail, txtPassword, txtRepeatPassword;
+    private Button btnRegister;
 
     private FirebaseAuth auth;
 
@@ -42,12 +42,12 @@ public class Register extends AppCompatActivity {
 
 
         //onclick btnReturn
-        btnReturn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Register.this, Login.class));
-            }
-        });
+        //btnReturn.setOnClickListener(new View.OnClickListener() {
+            //@Override
+            //public void onClick(View v) {
+                //startActivity(new Intent(Register.this, Login.class));
+            //}
+        //});
 
         //onclick btnRegister
         btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -56,7 +56,6 @@ public class Register extends AppCompatActivity {
 
                 //variaveis
                 String name = txtName.getText().toString().trim();
-                String username = txtUsername.getText().toString().trim();
                 String email = txtEmail.getText().toString().trim();
                 String password = txtPassword.getText().toString().trim();
                 String repeatPassword = txtRepeatPassword.getText().toString().trim();
@@ -65,9 +64,7 @@ public class Register extends AppCompatActivity {
                 if(TextUtils.isEmpty(name)){
                     Toast.makeText(getApplicationContext(), "Insere o teu nome.", Toast.LENGTH_SHORT).show();
                 }
-                if(TextUtils.isEmpty(username)){
-                    Toast.makeText(getApplicationContext(), "Insere o teu username.", Toast.LENGTH_SHORT).show();
-                }
+
                 if(TextUtils.isEmpty(email)){
                     Toast.makeText(getApplicationContext(), "Insere o teu email.", Toast.LENGTH_SHORT).show();
                 }
@@ -88,7 +85,7 @@ public class Register extends AppCompatActivity {
 
 
                 //criar o utilizador
-                auth.createUserWithEmailAndPassword(username, password).addOnCompleteListener(Register.this, new OnCompleteListener<AuthResult>() {
+                auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(Register.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Toast.makeText(Register.this, "UtilizadorCriadoComSucesso:onComplete" + task.isSuccessful(), Toast.LENGTH_SHORT).show();

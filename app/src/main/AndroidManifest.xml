@@ -20,14 +20,20 @@
             android:resource="@drawable/shadow_rect" />
 
         <activity
-            android:name=".activities.Home"
-            android:label="@string/title_activity_home">
+            android:name=".activities.Login"
+            android:label="login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".activities.Home"
+            android:label="@string/title_activity_home">
+        </activity>
+
         <activity android:name=".activities.PasswordRequest"
             android:parentActivityName="com.example.dressy.activities.Login"/>
 
@@ -37,7 +43,6 @@
         <activity android:name=".activities.Register"
             android:parentActivityName="com.example.dressy.activities.Login"/>
 
-        <activity android:name=".activities.Login" />
 
         <activity android:name=".activities.Launcher"/>
 
