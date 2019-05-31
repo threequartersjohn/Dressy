@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/logo_dressy" />
+        tools:srcCompat="@drawable/baseline_favorite_black_18dp" />
 
     <Button
         android:id="@+id/btnLogin"

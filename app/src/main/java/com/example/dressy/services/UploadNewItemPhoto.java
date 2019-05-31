@@ -191,6 +191,7 @@ public class UploadNewItemPhoto extends IntentService {
         categories.add(new String[] {"Long-sleeved t-shirt", "sweater"});
         categories.add(new String[] {"T-shirt", "sweater"});
         categories.add(new String[] {"Blouse", "sweater"});
+        categories.add(new String[] {"Chest", "sweater"});
 
         categories.add(new String[] {"Jacket", "jacket"});
 
@@ -203,7 +204,7 @@ public class UploadNewItemPhoto extends IntentService {
                             Log.d(dressyLogTag, categories.get(i)[0]);
                             Log.d(dressyLogTag, label.get("description").toString());
                             if(label.get("description").toString().equals(categories.get(i)[0])){
-                                result = categories.get(i)[0];
+                                result = categories.get(i)[1];
                                 break forloop;
                             }
                         }

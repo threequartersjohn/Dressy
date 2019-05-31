@@ -22,14 +22,23 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Home extends AppCompatActivity {
 
     public static List<Photo> photos = new ArrayList<>();
     public static String user_id = "admin";
+
+    private ArrayList<ArrayList<String>> filesByCategory = new ArrayList<>();
+    private ArrayList<String> pants = new ArrayList<>();
+    private ArrayList<String> jacket = new ArrayList<>();
+    private ArrayList<String> shoes = new ArrayList<>();
+    private ArrayList<String> sweater = new ArrayList<>();
+
+    private ArrayList<String[]> listOfCachedFiles;
+
     private String TAG = "dressyLogs";
     private DatabaseReference databaseReference;
-    private List<String[]> categories = new ArrayList<>();
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -74,6 +83,30 @@ public class Home extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new homeFragment()).commit();
 
+
+    }
+
+
+    private ArrayList<String> selectRandomPhotos(){
+
+        ArrayList<String> tempSelectedPhotos = new ArrayList();
+        Random random = new Random();
+
+        for(ArrayList<String> list: filesByCategory){
+            Integer rnd = random.nextInt(list.size()-1);
+            tempSelectedPhotos.add(list.get(rnd));
+        }
+
+        return tempSelectedPhotos;
+
+    }
+
+    private void loadFilesIntoCache(ArrayList<String> selection) {
+
+        while(listOfCachedFiles.size()<=3){
+
+        }
+
     }
 
 
@@ -99,7 +132,11 @@ public class Home extends AppCompatActivity {
 
                     tempPhotoHolder.add(photo);
                 }
+
                 photos = new ArrayList<>(tempPhotoHolder);
+                populateCategoryList();
+                loadFilesIntoCache(selectRandomPhotos());
+
             }
 
             @Override
@@ -107,6 +144,36 @@ public class Home extends AppCompatActivity {
                 Log.d(TAG, "[NETWORK.Database] Unexpected error occurred while fetching database content: " + databaseError.getMessage());
             }
         });
+    }
+
+    private void populateCategoryList(){
+
+        String type;
+
+        for(Photo photo:photos){
+            type = photo.getType();
+
+            switch (type){
+                case "shoes":
+                    shoes.add(photo.getPhoto_url());
+                    break;
+                case "pants":
+                    pants.add(photo.getPhoto_url());
+                    break;
+                case "jacket":
+                    jacket.add(photo.getPhoto_url());
+                    break;
+                case "sweater":
+                    sweater.add(photo.getPhoto_url());
+                    break;
+            }
+        }
+
+        filesByCategory.add(jacket);
+        filesByCategory.add(sweater);
+        filesByCategory.add(pants);
+        filesByCategory.add(shoes);
+
     }
 
     private void switchIcons(Integer ID) {
