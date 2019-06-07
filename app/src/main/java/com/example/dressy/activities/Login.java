@@ -77,12 +77,12 @@ public class Login extends AppCompatActivity {
                 final String password = txtPassword.getText().toString();
 
                 if(TextUtils.isEmpty(email)){
-                    Toast.makeText(getApplicationContext(), "Insire o teu email.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Insire o teu email.", Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 if(TextUtils.isEmpty(password)){
-                    Toast.makeText(getApplicationContext(), "Insire a tua password..", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Insire a tua password..", Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -109,64 +109,11 @@ public class Login extends AppCompatActivity {
                 }
         });
     }
-}
 
-    /* public void login(View view){
-        String password = txtPassword.getText().toString();
-        String email = txtEmail.getText().toString();
-
-        if(validateLogin(email, password)) {
-
-            //authenticate to firebase
-
-
-            //move to main screen
-            Intent intent = new Intent(this, Home.class);
-            startActivity(intent);
-
-        }
-
-        else {
-            clearLoginFields();
-            badLoginWarning();
-        }
-    }
-
-    private void badLoginWarning(){
-        Toast.makeText(this, "O seu Login é inválido!", Toast.LENGTH_LONG).show();
-    }
-
-    private void clearLoginFields(){
-        txtPassword.setText("");
-        txtEmail.setText("");
-    }
-
-    private boolean validateLogin(String email, String password){
-
-        Boolean isValid = true;
-
-        if (email.isEmpty()){
-            Log.d(dressyLogTag, "[LOGIN.VALIDATION] Email field is empty.");
-            isValid = false;
-        }
-
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            Log.d(dressyLogTag, "[LOGIN.VALIDATION] Email is not a valid email.");
-            isValid = false;
-        }
-
-        if (password.isEmpty()){
-            Log.d(dressyLogTag, "[LOGIN.VALIDATION] Password field is empty.");
-            isValid = false;
-        }
-
-        if (password.length() < minimumPasswordLength){
-            Log.d(dressyLogTag, "[LOGIN.VALIDATION] Password is smaller than minimum length.");
-            isValid = false;
-        }
-
-        //else
-        return isValid;
+    public void changeToPasswordRequest(View v){
+        Intent intent = new Intent(Login.this, PasswordChange.class);
+        startActivity(intent);
     }
 }
-*/
+
+

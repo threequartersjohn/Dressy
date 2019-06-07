@@ -1,5 +1,6 @@
 package com.example.dressy.activities;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,13 +11,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.dressy.R;
 import com.example.dressy.classes.Photo;
 import com.example.dressy.fragments.closetFragment;
 import com.example.dressy.fragments.favoritesFragment;
 import com.example.dressy.fragments.homeFragment;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,11 +36,16 @@ import java.util.List;
 public class Home extends AppCompatActivity {
 
     private TextView mTextMessage;
+    private Button btnLogout;
     private String TAG = "dressyLogs";
     private DatabaseReference databaseReference;
     public static List<Photo> photos = new ArrayList<>();
     private List<String[]> categories = new ArrayList<>();
     public static String user_id = "admin";
+
+
+    //public void logout(){
+    //}
 
     private void populateCategories(){
 
@@ -98,6 +109,17 @@ public class Home extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new homeFragment()).commit();
 
         populateCategories();
+
+
+        btnLogout = findViewById(R.id.btnLogout);
+        btnLogout.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v)  {
+                Log.d(TAG, FirebaseAuth.getInstance().getCurrentUser().toString());
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(Home.this, Login.class));
+            }
+        });
+
     }
 
 
