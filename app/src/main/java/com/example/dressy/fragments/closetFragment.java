@@ -33,8 +33,12 @@ import com.example.dressy.classes.Photo;
 import com.example.dressy.services.UploadNewItemPhoto;
 import com.example.dressy.util.MyRecyclerViewAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
@@ -54,9 +58,10 @@ public class closetFragment extends Fragment implements MyRecyclerViewAdapter.It
 
     static final int REQUEST_NEW_ITEM_PHOTO = 1;
     static final String TAG = "dressylogs";
-    MyRecyclerViewAdapter  adapter;
+    private MyRecyclerViewAdapter  adapter;
+    private RecyclerView recyclerView;
     private View rootView;
-    String currentPhotoPath;
+    private String currentPhotoPath;
 
     @Nullable
     @Override
@@ -75,22 +80,18 @@ public class closetFragment extends Fragment implements MyRecyclerViewAdapter.It
     }
 
     private void populateWithPhotos(){
-        RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.rvPhotos);
+        recyclerView = getActivity().findViewById(R.id.rvPhotos);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
         adapter = new MyRecyclerViewAdapter(getActivity(), photos, this);
         recyclerView.setAdapter(adapter);
 
-        Log.d("dressylogs", "Items in recycler view: " + adapter.getItemCount());
+        Log.d(TAG, "Items in recycler view: " + adapter.getItemCount());
     }
 
     private File createImageFile() throws IOException {
-        // Create an image file name
-
-
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-
 
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
@@ -99,7 +100,7 @@ public class closetFragment extends Fragment implements MyRecyclerViewAdapter.It
         );
 
         currentPhotoPath = image.getAbsolutePath();
-        Log.d("dressylogs", "Path to temporary file: " + currentPhotoPath);
+        Log.d(TAG, "Path to temporary file: " + currentPhotoPath);
         return image;
     }
 
@@ -112,7 +113,7 @@ public class closetFragment extends Fragment implements MyRecyclerViewAdapter.It
             try {
                 photoFile = createImageFile();
             } catch(IOException error){
-                Log.d("dressylogs", "[FILE] Unexpected error creating image file: " + error.getMessage());
+                Log.d(TAG, "[FILE] Unexpected error creating image file: " + error.getMessage());
             }
 
             if (photoFile!= null){
@@ -163,7 +164,7 @@ public class closetFragment extends Fragment implements MyRecyclerViewAdapter.It
     }
 
     @Override
-    public void onItemClick(int position) {
+    public void onItemClick(final int position) {
 
         final String url = photos.get(position).getPhoto_url();
 
@@ -173,20 +174,48 @@ public class closetFragment extends Fragment implements MyRecyclerViewAdapter.It
         Picasso.get().load(url).resize(400, 640).centerInside().into(showImage);
         ImageDialog.setView(showImage);
 
-        Log.d("dressylogs", "reached ON ITEM LCIK FUCK YESS");
+        Log.d(TAG, "reached ON ITEM LCIK FUCK YESS");
 
         ImageDialog.setNegativeButton("yes pls", new DialogInterface.OnClickListener()
         {
             public void onClick(DialogInterface arg0, int arg1)
             {
-                StorageReference photoRef = FirebaseStorage.getInstance().getReferenceFromUrl(url);
-                photoRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("dressylogs", "Photo delete from database!");
-                        ((Home)getActivity()).loadDataFromDatabase();
+            DatabaseReference ref =  FirebaseDatabase.getInstance().getReference();
+            Query databaseQuery = ref.child(user_id).orderByChild("photo_url").equalTo(url);
+
+            databaseQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Log.d(TAG, "Item in database to erase: " + dataSnapshot.toString());
+                    photos.remove(position);
+                    recyclerView.removeViewAt(position);
+                    adapter.notifyItemRemoved(position);
+                    adapter.notifyItemRangeChanged(position, photos.size());
+                    adapter.notifyDataSetChanged();
+
+                    for(DataSnapshot item: dataSnapshot.getChildren()){
+                        item.getRef().removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+
+                                StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(url);
+                                storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d(TAG, "Photo deleted from database!");
+                                        ((Home)getActivity()).loadDataFromDatabase();
+                                    }
+                                });
+                            }
+                        });
                     }
-                });
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) { }
+            });
+
+
             }
         });
         ImageDialog.setPositiveButton("não", new DialogInterface.OnClickListener()
