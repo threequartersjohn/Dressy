@@ -1,20 +1,26 @@
 package com.example.dressy.fragments;
 
 
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.dressy.R;
 import com.example.dressy.activities.Home;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -23,11 +29,12 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import static com.example.dressy.activities.Home.listOfCachedFiles;
+import static com.example.dressy.activities.Home.user_id;
 
 public class homeFragment extends Fragment {
 
     private String TAG = "dressyLogs";
-    private ArrayList<String> firstSelectedPhotos = new ArrayList<>();
+    private ArrayList<ArrayList<String>> firstSelectedPhotos = new ArrayList<>();
 
     @Nullable
     @Override
@@ -50,8 +57,8 @@ public class homeFragment extends Fragment {
     }
 
     public void showNewCombination(){
-        for(String photo:firstSelectedPhotos){
-            new File(photo).delete();
+        for(ArrayList<String>photo:firstSelectedPhotos){
+            new File(photo.get(0)).delete();
         }
 
         listOfCachedFiles.remove(0);
@@ -65,6 +72,10 @@ public class homeFragment extends Fragment {
             firstSelectedPhotos = listOfCachedFiles.get(0);
         }
         loadBitmapsIntoImageViews();
+
+        ImageView favoriteButton = getActivity().findViewById(R.id.favoriteButton);
+        favoriteButton.setImageResource(R.drawable.favorite_icon_empty);
+
     }
 
     private void loadBitmapsIntoImageViews(){
@@ -77,12 +88,38 @@ public class homeFragment extends Fragment {
 
         Log.d(TAG, firstSelectedPhotos.toString());
 
-        Picasso.get().load(new File(firstSelectedPhotos.get(0))).resize(400, 640).centerInside().into(imgPhoto1);
-        Picasso.get().load(new File(firstSelectedPhotos.get(1))).resize(400, 640).centerInside().into(imgPhoto2);
-        Picasso.get().load(new File(firstSelectedPhotos.get(2))).resize(400, 640).centerInside().into(imgPhoto3);
-        Picasso.get().load(new File(firstSelectedPhotos.get(3))).resize(400, 640).centerInside().into(imgPhoto4);
+        Picasso.get().load(new File(firstSelectedPhotos.get(0).get(0))).resize(400, 640).centerInside().into(imgPhoto1);
+        Picasso.get().load(new File(firstSelectedPhotos.get(1).get(0))).resize(400, 640).centerInside().into(imgPhoto2);
+        Picasso.get().load(new File(firstSelectedPhotos.get(2).get(0))).resize(400, 640).centerInside().into(imgPhoto3);
+        Picasso.get().load(new File(firstSelectedPhotos.get(3).get(0))).resize(400, 640).centerInside().into(imgPhoto4);
 
         Log.d(TAG, "Photos should be loaded into view.");
+    }
+
+    public void saveFavoriteCombination(){
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+        ArrayList<String> collection = new ArrayList<>();
+
+        for (int i = 0; i<4; i++){
+            collection.add(firstSelectedPhotos.get(i).get(1));
+        }
+
+        database.child(user_id).child("favorites").push().setValue(collection,  new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                if (databaseError != null) {
+                    System.out.println("Data could not be saved " + databaseError.getMessage());
+                } else {
+                    System.out.println("Data saved successfully.");
+                    Toast.makeText(getActivity(), "Combinação guardada como favorita!", Toast.LENGTH_LONG ).show();
+                }
+
+            }
+        });
+
+        ImageView favoriteButton = getActivity().findViewById(R.id.favoriteButton);
+        favoriteButton.setImageResource(R.drawable.favorite_icon_filled);
+
     }
 
     private class LoadPhotosIntoImageView extends AsyncTask<Void, Void, String>{
@@ -105,6 +142,13 @@ public class homeFragment extends Fragment {
         @Override
         protected void onPostExecute(String aLong) {
             loadBitmapsIntoImageViews();
+            ImageView favoriteButton = getActivity().findViewById(R.id.favoriteButton);
+            favoriteButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    saveFavoriteCombination();
+                }
+            });
         }
     }
 }

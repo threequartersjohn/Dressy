@@ -28,6 +28,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,7 +39,8 @@ public class Home extends AppCompatActivity {
 
     public static List<Photo> photos = new ArrayList<>();
     public static String user_id = "admin";
-    public static ArrayList<ArrayList<String>> listOfCachedFiles = new ArrayList<>();
+    public static ArrayList<ArrayList<ArrayList<String>>> listOfCachedFiles = new ArrayList<>();
+    public static ArrayList<ArrayList<String>> favorites = new ArrayList<>();
 
     private ArrayList<ArrayList<String>> filesByCategory = new ArrayList<>();
     private ArrayList<String> pants = new ArrayList<>();
@@ -121,8 +123,8 @@ public class Home extends AppCompatActivity {
         Integer attempt = 0;
 
         while(listOfCachedFiles.size()<=3 && attempt<3){
-            final ArrayList<String> items = new ArrayList<String>();
-            ArrayList<String> photos = selectRandomPhotos();
+            final ArrayList<ArrayList<String>> items = new ArrayList<>();
+            final ArrayList<String> photos = selectRandomPhotos();
             attempt++;
 
             for(int x = 0; x<photos.size(); x++){
@@ -138,6 +140,8 @@ public class Home extends AppCompatActivity {
                 );
                 image.deleteOnExit();
 
+                final int iteration = x;
+
                 StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(photos.get(x));
                 storageReference.getFile(image).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                     @Override
@@ -145,7 +149,10 @@ public class Home extends AppCompatActivity {
                         Log.d(TAG, "Successful load into local file, file size is: " + image.length());
                         loadedFiles++;
                         Log.d(TAG, loadedFiles + " files loaded into memory, " + listOfCachedFiles.size() + " sets of photos in memory.");
-                        items.add(image.getAbsolutePath());
+                        ArrayList<String> tempItem = new ArrayList();
+                        tempItem.add(image.getAbsolutePath());
+                        tempItem.add(photos.get(iteration));
+                        items.add(tempItem);
                         if (items.size() == 4){
                             listOfCachedFiles.add(items);
                         }
@@ -175,13 +182,31 @@ public class Home extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<Photo> tempPhotoHolder = new ArrayList<>();
+
+                //load favorites
+                for (DataSnapshot ds : dataSnapshot.child("favorites").getChildren()){
+                    ArrayList<String> items = new ArrayList<>();
+                    for(DataSnapshot item : ds.getChildren()) {
+                        items.add(item.toString());
+                    }
+                    favorites.add(items);
+                }
+
+                Log.d(TAG, "Favorites: " + favorites.toString());
+
+
+                //load photos
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Photo photo = new Photo();
 
-                    photo.setPhoto_url(ds.child("photo_url").getValue().toString());
-                    photo.setType(ds.child("type").getValue().toString());
+                    try{
+                        photo.setPhoto_url(ds.child("photo_url").getValue().toString());
+                        photo.setType(ds.child("type").getValue().toString());
 
-                    tempPhotoHolder.add(photo);
+                        tempPhotoHolder.add(photo);
+                    } catch(Exception error) {
+                        continue;
+                    }
                 }
 
                 photos = new ArrayList<>(tempPhotoHolder);
