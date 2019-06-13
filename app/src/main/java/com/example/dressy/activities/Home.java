@@ -187,7 +187,7 @@ public class Home extends AppCompatActivity {
                 for (DataSnapshot ds : dataSnapshot.child("favorites").getChildren()){
                     ArrayList<String> items = new ArrayList<>();
                     for(DataSnapshot item : ds.getChildren()) {
-                        items.add(item.toString());
+                        items.add(item.getValue().toString());
                     }
                     favorites.add(items);
                 }
