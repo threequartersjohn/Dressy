@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.dressy.R;
 import com.example.dressy.activities.Home;
@@ -52,6 +53,7 @@ import java.util.List;
 import static android.app.Activity.RESULT_OK;
 import static com.example.dressy.activities.Home.photos;
 import static com.example.dressy.activities.Home.user_id;
+import static com.example.dressy.util.MyRecyclerViewAdapter.photosFiltered;
 
 public class closetFragment extends Fragment implements MyRecyclerViewAdapter.ItemClickListener
 {
@@ -73,6 +75,43 @@ public class closetFragment extends Fragment implements MyRecyclerViewAdapter.It
             @Override
             public void onClick(View v) {
                 requestNewItemPhoto(v);
+            }
+        });
+
+        TextView txtFilterPants = rootView.findViewById(R.id.txtFiltrarPants);
+        TextView txtFilterShoes = rootView.findViewById(R.id.txtFiltrarShoes);
+        TextView txtFilterSweater = rootView.findViewById(R.id.txtFiltrarSweater);
+        TextView txtFilterJacket = rootView.findViewById(R.id.txtFiltrarJacket);
+        TextView txtFilterTudo = rootView.findViewById(R.id.txtFiltrarTudo);
+
+        txtFilterJacket.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                filterItemsInList("jacket");
+            }
+        });
+        txtFilterPants.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                filterItemsInList("pants");
+            }
+        });
+        txtFilterShoes.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                filterItemsInList("shoes");
+            }
+        });
+        txtFilterSweater.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                filterItemsInList("sweater");
+            }
+        });
+        txtFilterTudo.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                filterItemsInList("");
             }
         });
 
@@ -166,7 +205,7 @@ public class closetFragment extends Fragment implements MyRecyclerViewAdapter.It
     @Override
     public void onItemClick(final int position) {
 
-        final String url = photos.get(position).getPhoto_url();
+        final String url = photosFiltered.get(position).getPhoto_url();
 
         AlertDialog.Builder ImageDialog = new AlertDialog.Builder(getActivity());
         ImageDialog.setTitle("Apagar?");
@@ -174,7 +213,6 @@ public class closetFragment extends Fragment implements MyRecyclerViewAdapter.It
         Picasso.get().load(url).resize(400, 640).centerInside().into(showImage);
         ImageDialog.setView(showImage);
 
-        Log.d(TAG, "reached ON ITEM LCIK FUCK YESS");
 
         ImageDialog.setNegativeButton("yes pls", new DialogInterface.OnClickListener()
         {
@@ -225,5 +263,10 @@ public class closetFragment extends Fragment implements MyRecyclerViewAdapter.It
             }
         });
         ImageDialog.show();
+
+    }
+
+    public void filterItemsInList(String type){
+        adapter.getFilter().filter(type);
     }
 }

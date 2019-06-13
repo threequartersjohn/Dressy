@@ -178,10 +178,14 @@ public class Home extends AppCompatActivity {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Photo photo = new Photo();
 
-                    photo.setPhoto_url(ds.child("photo_url").getValue().toString());
-                    photo.setType(ds.child("type").getValue().toString());
+                    try {
+                        photo.setPhoto_url(ds.child("photo_url").getValue().toString());
+                        photo.setType(ds.child("type").getValue().toString());
 
-                    tempPhotoHolder.add(photo);
+                        tempPhotoHolder.add(photo);
+                    } catch (Exception error) { }
+
+
                 }
 
                 photos = new ArrayList<>(tempPhotoHolder);
