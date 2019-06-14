@@ -3,17 +3,17 @@
 
     <item
         android:id="@+id/navCloset"
-        android:icon="@drawable/outline_photo_library_black_18dp"
+        android:icon="@drawable/baseline_photo_library_black_18dp"
         android:title="@string/title_closet" />
 
     <item
         android:id="@+id/navHome"
-        android:icon="@drawable/outline_home_black_18dp"
+        android:icon="@drawable/baseline_home_black_18dp"
         android:title="@string/title_home" />
 
     <item
         android:id="@+id/navFavorites"
-        android:icon="@drawable/outline_favorite_border_black_18dp"
+        android:icon="@drawable/baseline_favorite_black_18dp"
         android:title="@string/title_favorites" />
 
 </menu>
