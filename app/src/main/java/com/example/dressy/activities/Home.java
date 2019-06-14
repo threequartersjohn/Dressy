@@ -37,6 +37,10 @@ import java.util.Random;
 
 public class Home extends AppCompatActivity {
 
+    private TextView mTextMessage;
+    private Button btnLogout;
+    private String TAG = "dressyLogs";
+    private DatabaseReference databaseReference;
     public static List<Photo> photos = new ArrayList<>();
     public static String user_id = "admin";
     public static ArrayList<ArrayList<ArrayList<String>>> listOfCachedFiles = new ArrayList<>();
@@ -47,6 +51,25 @@ public class Home extends AppCompatActivity {
     private ArrayList<String> jacket = new ArrayList<>();
     private ArrayList<String> shoes = new ArrayList<>();
     private ArrayList<String> sweater = new ArrayList<>();
+
+    //public void logout(){
+    //}
+
+    private void populateCategories(){
+
+        categories.add(new String[] {"Jeans", "pants"});
+        categories.add(new String[] {"Trousers", "pants"});
+
+        categories.add(new String[] {"Footwear", "shoes"});
+        categories.add(new String[] {"Shoe", "shoe"});
+
+        categories.add(new String[] {"Sweater", "sweater"});
+        categories.add(new String[] {"Long-sleeved t-shirt", "sweater"});
+        categories.add(new String[] {"Blouse", "sweater"});
+
+        categories.add(new String[] {"Jacket", "jacket"});
+
+    }
 
     private Integer loadedFiles = 0;
     private String TAG = "dressyLogs";
@@ -115,6 +138,18 @@ public class Home extends AppCompatActivity {
         }
 
         return tempSelectedPhotos;
+
+        populateCategories();
+
+
+        btnLogout = findViewById(R.id.btnLogout);
+        btnLogout.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v)  {
+                Log.d(TAG, FirebaseAuth.getInstance().getCurrentUser().toString());
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(Home.this, Login.class));
+            }
+        });
 
     }
 

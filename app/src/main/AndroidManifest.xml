@@ -35,10 +35,11 @@
             android:name="com.google.android.actions"
             android:resource="@drawable/shadow_rect" />
 
-        <activity
-            android:name=".activities.Home"
-            android:label="@string/title_activity_home">
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
 
+        <activity
+            android:name=".activities.Login"
+            android:label="login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -46,6 +47,12 @@
             </intent-filter>
 
         </activity>
+
+        <activity
+            android:name=".activities.Home"
+            android:label="@string/title_activity_home">
+        </activity>
+
         <activity android:name=".activities.PasswordRequest"
             android:parentActivityName="com.example.dressy.activities.Login"/>
 
@@ -55,7 +62,6 @@
         <activity android:name=".activities.Register"
             android:parentActivityName="com.example.dressy.activities.Login"/>
 
-        <activity android:name=".activities.Login" > </activity>
 
         <activity android:name=".activities.Launcher"/>
 
@@ -64,5 +70,6 @@
             android:exported="false" />
 
     </application>
+
 
 </manifest>

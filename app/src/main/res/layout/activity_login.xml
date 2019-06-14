@@ -26,14 +26,15 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="68dp"
         android:layout_marginLeft="68dp"
-        android:layout_marginTop="62dp"
         android:layout_marginEnd="68dp"
         android:layout_marginRight="68dp"
+        android:layout_marginBottom="14dp"
         android:background="@drawable/button_filled"
         android:text="Login"
         android:textColor="@android:color/background_light"
         android:textSize="24sp"
         app:fontFamily="@font/weblysleekuisb"
+        app:layout_constraintBottom_toTopOf="@+id/btnRegister"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtNovaPasswordLabel" />
@@ -42,17 +43,18 @@
         android:id="@+id/btnRegister"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+
         android:layout_marginStart="68dp"
         android:layout_marginLeft="68dp"
-        android:layout_marginTop="38dp"
         android:layout_marginEnd="68dp"
         android:layout_marginRight="68dp"
-
+        android:layout_marginBottom="51dp"
         android:background="@drawable/button_filled"
         android:text="Registo"
         android:textColor="@android:color/background_light"
         android:textSize="24sp"
         app:fontFamily="@font/weblysleekuisb"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
@@ -65,11 +67,13 @@
         android:layout_marginLeft="68dp"
         android:layout_marginEnd="68dp"
         android:layout_marginRight="68dp"
+        android:layout_marginBottom="17dp"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/txtPasswordLabel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtEmailLabel" />
 
     <EditText
         android:id="@+id/txtPassword"
@@ -81,46 +85,80 @@
         android:layout_marginRight="68dp"
         android:ems="10"
         android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/txtNovaPasswordLabel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPasswordLabel" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/txtEmailLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginBottom="46dp"
         android:text="Email:"
         android:textSize="18sp"
         app:fontFamily="@font/weblysleekuil"
-        app:layout_constraintBottom_toTopOf="@+id/txtPasswordLabel"
-        app:layout_constraintStart_toStartOf="@+id/txtPasswordLabel" />
+        app:layout_constraintBottom_toTopOf="@+id/txtName"
+        app:layout_constraintStart_toStartOf="@+id/txtName"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <TextView
         android:id="@+id/txtPasswordLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="68dp"
-        android:layout_marginLeft="68dp"
+        android:layout_marginBottom="42dp"
         android:text="Palavra passe:"
         android:textSize="18sp"
         app:fontFamily="@font/weblysleekuil"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/txtNovaPasswordLabel"
+        app:layout_constraintStart_toStartOf="@+id/txtPassword"
+        app:layout_constraintTop_toBottomOf="@+id/txtName" />
 
     <TextView
         android:id="@+id/txtNovaPasswordLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="1dp"
-        android:layout_marginRight="1dp"
+        android:layout_marginBottom="17dp"
+        android:clickable="true"
+        android:onClick="changeToPasswordRequest"
         android:text="Esqueceu-se da sua palavra-passe?"
         app:fontFamily="@font/webly_sleek"
+        app:layout_constraintBottom_toTopOf="@+id/btnLogin"
         app:layout_constraintEnd_toEndOf="@+id/txtPassword"
-        app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/txtPasswordLabel" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="357dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="141dp"
+        android:src="@drawable/logo_dressy"
+        app:layout_constraintBottom_toTopOf="@+id/txtEmailLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iconFacebook"
+        android:layout_width="50dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="152dp"
+        android:layout_marginLeft="152dp"
+        android:layout_marginTop="260dp"
+        android:src="@drawable/iconfacebook"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iconTwitter"
+        android:layout_width="58dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginLeft="76dp"
+        android:layout_marginTop="260dp"
+        app:layout_constraintStart_toStartOf="@+id/iconFacebook"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icontwitter" />
 
 
 </android.support.constraint.ConstraintLayout>

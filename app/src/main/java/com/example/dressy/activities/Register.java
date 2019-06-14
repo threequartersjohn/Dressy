@@ -18,8 +18,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class Register extends AppCompatActivity {
 
-    private EditText txtName, txtUsername, txtEmail, txtPassword, txtRepeatPassword;
-    private Button btnRegister, btnReturn;
+    private EditText txtName, txtEmail, txtPassword, txtRepeatPassword;
+    private Button btnRegister;
 
     private FirebaseAuth auth;
 
@@ -36,18 +36,18 @@ public class Register extends AppCompatActivity {
         //btnReturn = (Button) findViewById(R.id.btn);
         btnRegister = (Button) findViewById(R.id.btnRegister);
         txtName = (EditText) findViewById(R.id.txtName);
-        txtEmail = (EditText) findViewById(R.id.txtEmail);
+        txtEmail = (EditText) findViewById(R.id.txtName);
         txtPassword = (EditText) findViewById(R.id.txtPassword);
         txtRepeatPassword = (EditText) findViewById(R.id.txtRepeatPassword);
 
 
         //onclick btnReturn
-        btnReturn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Register.this, Login.class));
-            }
-        });
+        //btnReturn.setOnClickListener(new View.OnClickListener() {
+            //@Override
+            //public void onClick(View v) {
+                //startActivity(new Intent(Register.this, Login.class));
+            //}
+        //});
 
         //onclick btnRegister
         btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -56,50 +56,48 @@ public class Register extends AppCompatActivity {
 
                 //variaveis
                 String name = txtName.getText().toString().trim();
-                String username = txtUsername.getText().toString().trim();
                 String email = txtEmail.getText().toString().trim();
                 String password = txtPassword.getText().toString().trim();
                 String repeatPassword = txtRepeatPassword.getText().toString().trim();
 
                 //Informaçoes para user
                 if(TextUtils.isEmpty(name)){
-                    Toast.makeText(getApplicationContext(), "Insere o teu nome.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Insere o teu nome.", Toast.LENGTH_LONG).show();
                 }
-                if(TextUtils.isEmpty(username)){
-                    Toast.makeText(getApplicationContext(), "Insere o teu username.", Toast.LENGTH_SHORT).show();
-                }
+
                 if(TextUtils.isEmpty(email)){
-                    Toast.makeText(getApplicationContext(), "Insere o teu email.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Insere o teu email.", Toast.LENGTH_LONG).show();
                 }
                 if(TextUtils.isEmpty(password)){
-                    Toast.makeText(getApplicationContext(), "Insere a tua password.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Insere a tua password.", Toast.LENGTH_LONG).show();
                 }
                 if(TextUtils.isEmpty(repeatPassword)){
-                    Toast.makeText(getApplicationContext(), "Repete a tua password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Repete a tua password", Toast.LENGTH_LONG).show();
                 }
 
                 if(password.length() < 6){
-                    Toast.makeText(getApplicationContext(), "Minimo 6 caracteres.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Minimo 6 caracteres.", Toast.LENGTH_LONG).show();
                 }
 
-                if(password != repeatPassword){
-                    Toast.makeText(getApplicationContext(), "As passwords não correspondem. Insere novamente.", Toast.LENGTH_SHORT).show();
+                if(!password.equals(repeatPassword)){
+                    Toast.makeText(getApplicationContext(), "As passwords não correspondem. Insere novamente.", Toast.LENGTH_LONG).show();
+                    return;
                 }
 
 
                 //criar o utilizador
-                auth.createUserWithEmailAndPassword(username, password).addOnCompleteListener(Register.this, new OnCompleteListener<AuthResult>() {
+                auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(Register.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Toast.makeText(Register.this, "UtilizadorCriadoComSucesso:onComplete" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Register.this, "UtilizadorCriadoComSucesso:onComplete" + task.isSuccessful(), Toast.LENGTH_LONG).show();
 
                         //Se falhar manda toast
                         if(!task.isSuccessful()){
-                            Toast.makeText(Register.this, "A autenticação falhou!" + task.getException(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Register.this, "A autenticação falhou!" + task.getException(), Toast.LENGTH_LONG).show();
                         }
                         else{
-                            startActivity(new Intent(Register.this, Home.class));
-                        }
+                        startActivity(new Intent(Register.this, Home.class));
+                    }
                     }
                 });
 

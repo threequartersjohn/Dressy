@@ -11,40 +11,41 @@ import android.widget.Toast;
 
 import com.example.dressy.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class PasswordChange extends AppCompatActivity {
 
-    private EditText txtEmail;
+    private EditText txtName;
     private Button btnSubmit, btnBack;
     private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_password_change2);
+        setContentView(R.layout.activity_password_change);
 
-        txtEmail = (EditText) findViewById(R.id.txtName);
-        //btnSubmit = (Button) findViewById(R.id.btnSubmit);
+        txtName = (EditText) findViewById(R.id.txtName);
+        btnSubmit = (Button) findViewById(R.id.btnSubmit);
         //btnBack = (Button) findViewById(R.id.btnBack);
 
         auth = FirebaseAuth.getInstance();
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        //btnBack.setOnClickListener(new View.OnClickListener() {
+            //@Override
+            //public void onClick(View v) {
+                //finish();
+            //}
+        //});
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = txtEmail.getText().toString().trim();
+                String email = txtName.getText().toString().trim();
 
                 if(TextUtils.isEmpty(email)){
-                    Toast.makeText(getApplication(), "Insira o seu email registado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), "Insira o seu email registado", Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -52,11 +53,16 @@ public class PasswordChange extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(PasswordChange.this, "Enviamos email para redefinir a sua nova password", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PasswordChange.this, "Enviamos email para redefinir a sua nova password", Toast.LENGTH_LONG).show();
                         }
                         else{
-                            Toast.makeText(PasswordChange.this, "Falha no envio falhou", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PasswordChange.this, "Email não registado", Toast.LENGTH_LONG).show();
                         }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(PasswordChange.this, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
             }
