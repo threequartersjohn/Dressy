@@ -19,6 +19,8 @@
             android:name="com.google.android.actions"
             android:resource="@drawable/shadow_rect" />
 
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+
         <activity
             android:name=".activities.Login"
             android:label="login">
@@ -51,5 +53,6 @@
             android:exported="false" />
 
     </application>
+
 
 </manifest>

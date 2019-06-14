@@ -17,6 +17,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import com.facebook.FacebookSdk;
+
 public class Login extends AppCompatActivity {
 
     private EditText txtEmail, txtPassword;
