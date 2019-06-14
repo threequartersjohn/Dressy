@@ -1,5 +1,6 @@
 package com.example.dressy.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -9,6 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.dressy.R;
 import com.example.dressy.classes.Photo;
@@ -17,6 +21,7 @@ import com.example.dressy.fragments.favoritesFragment;
 import com.example.dressy.fragments.homeFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,7 +43,7 @@ import java.util.Random;
 public class Home extends AppCompatActivity {
 
     private TextView mTextMessage;
-    private Button btnLogout;
+
     private String TAG = "dressyLogs";
     private DatabaseReference databaseReference;
     public static List<Photo> photos = new ArrayList<>();
@@ -46,11 +51,14 @@ public class Home extends AppCompatActivity {
     public static ArrayList<ArrayList<ArrayList<String>>> listOfCachedFiles = new ArrayList<>();
     public static ArrayList<ArrayList<String>> favorites = new ArrayList<>();
 
+
     private ArrayList<ArrayList<String>> filesByCategory = new ArrayList<>();
     private ArrayList<String> pants = new ArrayList<>();
     private ArrayList<String> jacket = new ArrayList<>();
     private ArrayList<String> shoes = new ArrayList<>();
     private ArrayList<String> sweater = new ArrayList<>();
+
+    private ArrayList<String[]> categories = new ArrayList<>();
 
     //public void logout(){
     //}
@@ -72,8 +80,6 @@ public class Home extends AppCompatActivity {
     }
 
     private Integer loadedFiles = 0;
-    private String TAG = "dressyLogs";
-    private DatabaseReference databaseReference;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -107,9 +113,19 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        populateCategories();
 
         //hides title bar
         getSupportActionBar().hide();
+
+//        btnLogout = findViewById(R.id.btnLogout);
+//        btnLogout.setOnClickListener(new View.OnClickListener(){
+//            public void onClick(View v)  {
+//                Log.d(TAG, FirebaseAuth.getInstance().getCurrentUser().toString());
+//                FirebaseAuth.getInstance().signOut();
+//                startActivity(new Intent(Home.this, Login.class));
+//            }
+//        });
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child(user_id);
 
@@ -139,17 +155,6 @@ public class Home extends AppCompatActivity {
 
         return tempSelectedPhotos;
 
-        populateCategories();
-
-
-        btnLogout = findViewById(R.id.btnLogout);
-        btnLogout.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v)  {
-                Log.d(TAG, FirebaseAuth.getInstance().getCurrentUser().toString());
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(Home.this, Login.class));
-            }
-        });
 
     }
 

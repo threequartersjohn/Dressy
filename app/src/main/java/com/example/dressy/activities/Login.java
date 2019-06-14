@@ -18,7 +18,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-import com.facebook.FacebookSdk;
 
 public class Login extends AppCompatActivity {
 
@@ -35,13 +34,6 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-
-
-        if (auth.getCurrentUser() != null) {
-            startActivity(new Intent(Login.this, Home.class));
-            finish();
-        }
 
         //hides title bar (?)
         getSupportActionBar().hide();
