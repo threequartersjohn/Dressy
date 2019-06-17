@@ -38,22 +38,21 @@ public class UploadNewItemPhoto extends IntentService {
     private StorageReference storageReference;
     private DatabaseReference database;
 
-    private int photoQuality = 90;
-    private Intent resultIntent = new Intent("upload_new_item_photo_result");
+    private final int photoQuality = 90;
+    private final Intent resultIntent = new Intent("upload_new_item_photo_result");
     private String user_id = "";
 
     public UploadNewItemPhoto() {
         super("UploadNewItemPhoto");
     }
 
-    static final String dressyLogTag = "dressyLogs";
+    private static final String dressyLogTag = "dressyLogs";
 
     @Override
     protected void onHandleIntent(Intent intent) {
 
         Bitmap photo = BitmapFactory.decodeFile(intent.getStringExtra("photo"));
         user_id = intent.getStringExtra("user_id");
-        final String type = intent.getStringExtra("type");
 
         storageReference = FirebaseStorage.getInstance().getReference().child(UUID.randomUUID().toString());
         database = FirebaseDatabase.getInstance().getReference();
@@ -86,7 +85,7 @@ public class UploadNewItemPhoto extends IntentService {
                 });
     }
 
-    protected void savePhotoToDatabase(final String url, String user, String type){
+    private void savePhotoToDatabase(final String url, String user, String type){
 
         Photo photo = new Photo(url, type);
 

@@ -6,15 +6,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 import android.support.v4.content.LocalBroadcastManager;
@@ -30,7 +27,6 @@ import android.widget.TextView;
 
 import com.example.dressy.R;
 import com.example.dressy.activities.Home;
-import com.example.dressy.classes.Photo;
 import com.example.dressy.services.UploadNewItemPhoto;
 import com.example.dressy.util.MyRecyclerViewAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -48,7 +44,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 import static com.example.dressy.activities.Home.photos;
@@ -58,8 +53,8 @@ import static com.example.dressy.util.MyRecyclerViewAdapter.photosFiltered;
 public class closetFragment extends Fragment implements MyRecyclerViewAdapter.ItemClickListener
 {
 
-    static final int REQUEST_NEW_ITEM_PHOTO = 1;
-    static final String TAG = "dressylogs";
+    private static final int REQUEST_NEW_ITEM_PHOTO = 1;
+    private static final String TAG = "dressylogs";
     private MyRecyclerViewAdapter  adapter;
     private RecyclerView recyclerView;
     private View rootView;
@@ -74,7 +69,7 @@ public class closetFragment extends Fragment implements MyRecyclerViewAdapter.It
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                requestNewItemPhoto(v);
+                requestNewItemPhoto();
             }
         });
 
@@ -144,7 +139,7 @@ public class closetFragment extends Fragment implements MyRecyclerViewAdapter.It
     }
 
 
-    public void requestNewItemPhoto(View  view){
+    private void requestNewItemPhoto(){
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
@@ -177,7 +172,7 @@ public class closetFragment extends Fragment implements MyRecyclerViewAdapter.It
     }
 
     //Local Broadcast Logic para receber resultado do serviço
-    private BroadcastReceiver  bReceiver = new BroadcastReceiver(){
+    private final BroadcastReceiver  bReceiver = new BroadcastReceiver(){
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -194,7 +189,6 @@ public class closetFragment extends Fragment implements MyRecyclerViewAdapter.It
     public void onResume(){
         super.onResume();
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(bReceiver, new IntentFilter("upload_new_item_photo_result"));
-
     }
 
     public void onPause (){
@@ -212,7 +206,6 @@ public class closetFragment extends Fragment implements MyRecyclerViewAdapter.It
         ImageView showImage = new ImageView(getActivity());
         Picasso.get().load(url).resize(400, 640).centerInside().into(showImage);
         ImageDialog.setView(showImage);
-
 
         ImageDialog.setNegativeButton("yes pls", new DialogInterface.OnClickListener()
         {
@@ -266,7 +259,7 @@ public class closetFragment extends Fragment implements MyRecyclerViewAdapter.It
 
     }
 
-    public void filterItemsInList(String type){
+    private void filterItemsInList(String type){
         adapter.getFilter().filter(type);
     }
 }

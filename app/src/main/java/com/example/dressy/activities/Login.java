@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +24,6 @@ public class Login extends AppCompatActivity {
     private TextView txtNovaPasswordLabel;
     private FirebaseAuth auth;
     private Button btnLogin, btnRegister;
-    final String dressyLogTag = "dressylogs";
     final int minimumPasswordLength = 6;
     //comentario
 
@@ -41,11 +39,11 @@ public class Login extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
         //connect variables with layout
-        txtEmail = (EditText) findViewById(R.id.txtName);
-        txtPassword = (EditText) findViewById(R.id.txtPassword);
-        btnLogin = (Button) findViewById(R.id.btnLogin);
-        btnRegister = (Button) findViewById(R.id.btnRegister);
-        txtNovaPasswordLabel = (TextView) findViewById(R.id.txtNovaPasswordLabel);
+        txtEmail = findViewById(R.id.txtName);
+        txtPassword = findViewById(R.id.txtPassword);
+        btnLogin = findViewById(R.id.btnLogin);
+        btnRegister = findViewById(R.id.btnRegister);
+        txtNovaPasswordLabel = findViewById(R.id.txtNovaPasswordLabel);
 
         auth = FirebaseAuth.getInstance();
 
@@ -67,7 +65,7 @@ public class Login extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = txtEmail.getText().toString();
+                final String email = txtEmail.getText().toString();
                 final String password = txtPassword.getText().toString();
 
                 if(TextUtils.isEmpty(email)){
@@ -86,7 +84,7 @@ public class Login extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(!task.isSuccessful()){
-                                if(password.length() < 6){
+                                if(password.length() < minimumPasswordLength){
                                     txtPassword.setError(getString(R.string.minimun_password));
                                 }
                                 else{
@@ -95,6 +93,7 @@ public class Login extends AppCompatActivity {
                             }
                             else{
                                 Intent intent = new Intent(Login.this, Home.class);
+                                intent.putExtra("user", email);
                                 startActivity(intent);
                                 finish();
                             }

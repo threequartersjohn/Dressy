@@ -34,11 +34,11 @@ public class Register extends AppCompatActivity {
         //ainda n existe layout para isto
         //variaveis
         //btnReturn = (Button) findViewById(R.id.btn);
-        btnRegister = (Button) findViewById(R.id.btnRegister);
-        txtName = (EditText) findViewById(R.id.txtName);
-        txtEmail = (EditText) findViewById(R.id.txtName);
-        txtPassword = (EditText) findViewById(R.id.txtPassword);
-        txtRepeatPassword = (EditText) findViewById(R.id.txtRepeatPassword);
+        btnRegister = findViewById(R.id.btnRegister);
+        txtName = findViewById(R.id.txtName);
+        txtEmail = findViewById(R.id.txtName);
+        txtPassword = findViewById(R.id.txtPassword);
+        txtRepeatPassword = findViewById(R.id.txtRepeatPassword);
 
 
         //onclick btnReturn
@@ -105,10 +105,5 @@ public class Register extends AppCompatActivity {
         });
         //hides title bar
         getSupportActionBar().hide();
-    }
-
-    @Override
-    protected void onResume(){
-    super.onResume();
     }
 }

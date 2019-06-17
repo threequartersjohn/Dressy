@@ -7,12 +7,10 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.example.dressy.R;
 import com.example.dressy.classes.Photo;
@@ -21,7 +19,6 @@ import com.example.dressy.fragments.favoritesFragment;
 import com.example.dressy.fragments.homeFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,7 +30,6 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,21 +38,21 @@ import java.util.Random;
 
 public class Home extends AppCompatActivity {
 
-    private TextView mTextMessage;
 
-    private String TAG = "dressyLogs";
+    private final String TAG = "dressyLogs";
     private DatabaseReference databaseReference;
     public static List<Photo> photos = new ArrayList<>();
     public static String user_id = "admin";
-    public static ArrayList<ArrayList<ArrayList<String>>> listOfCachedFiles = new ArrayList<>();
-    public static ArrayList<ArrayList<String>> favorites = new ArrayList<>();
+    public static Integer width;
+    public final static ArrayList<ArrayList<ArrayList<String>>> listOfCachedFiles = new ArrayList<>();
+    public final static ArrayList<ArrayList<String>> favorites = new ArrayList<>();
 
 
-    private ArrayList<ArrayList<String>> filesByCategory = new ArrayList<>();
-    private ArrayList<String> pants = new ArrayList<>();
-    private ArrayList<String> jacket = new ArrayList<>();
-    private ArrayList<String> shoes = new ArrayList<>();
-    private ArrayList<String> sweater = new ArrayList<>();
+    private final ArrayList<ArrayList<String>> filesByCategory = new ArrayList<>();
+    private final ArrayList<String> pants = new ArrayList<>();
+    private final ArrayList<String> jacket = new ArrayList<>();
+    private final ArrayList<String> shoes = new ArrayList<>();
+    private final ArrayList<String> sweater = new ArrayList<>();
 
     private ArrayList<String[]> categories = new ArrayList<>();
 
@@ -80,7 +76,7 @@ public class Home extends AppCompatActivity {
     }
 
     private Integer loadedFiles = 0;
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+    private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
@@ -114,6 +110,14 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         populateCategories();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+        Intent intent = getIntent();
+        user_id = intent.getStringExtra("user").substring(0, intent.getStringExtra("user").indexOf('@'));
+
+
+        width = displayMetrics.widthPixels/4;
 
         //hides title bar
         getSupportActionBar().hide();
@@ -154,8 +158,6 @@ public class Home extends AppCompatActivity {
         }
 
         return tempSelectedPhotos;
-
-
     }
 
     public void loadFilesIntoCache() throws IOException {
@@ -224,6 +226,7 @@ public class Home extends AppCompatActivity {
                 List<Photo> tempPhotoHolder = new ArrayList<>();
 
                 //load favorites
+                favorites.clear();
                 for (DataSnapshot ds : dataSnapshot.child("favorites").getChildren()){
                     ArrayList<String> items = new ArrayList<>();
                     for(DataSnapshot item : ds.getChildren()) {

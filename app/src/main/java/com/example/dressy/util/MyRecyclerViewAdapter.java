@@ -1,6 +1,5 @@
 package com.example.dressy.util;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -23,16 +22,16 @@ import java.util.List;
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> implements Filterable {
 
     private Integer iterationCounter = 0;
-    private List<Photo> photos;
-    public static ArrayList<Photo> photosFiltered = new ArrayList<>();
-    private LayoutInflater mInflater;
-    private ItemClickListener mClickListener;
+    private final List<Photo> photos;
+    public final static ArrayList<Photo> photosFiltered = new ArrayList<>();
+    private final LayoutInflater mInflater;
+    private final ItemClickListener mClickListener;
 
     // data is passed into the constructor
     public MyRecyclerViewAdapter(Context context, List<Photo> data, ItemClickListener mClickListener) {
         this.mInflater = LayoutInflater.from(context);
         this.photos = data;
-        this.photosFiltered.addAll(photos);
+        photosFiltered.addAll(photos);
         this.mClickListener = mClickListener;
     }
 
@@ -52,10 +51,10 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public ImageView imageView;
-        ItemClickListener itemClickListener;
+        final ImageView imageView;
+        final ItemClickListener itemClickListener;
 
-        public ViewHolder(View itemView, ItemClickListener itemClickListener) {
+        private ViewHolder(View itemView, ItemClickListener itemClickListener) {
             super(itemView);
             imageView = itemView.findViewById(R.id.closet_photo);
             this.itemClickListener = itemClickListener;
@@ -95,7 +94,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         return filter;
     }
 
-    private Filter filter = new Filter() {
+    private final Filter filter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             ArrayList<Photo> filteredList = new ArrayList<>();
@@ -108,7 +107,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
                 for(Photo photo: photos){
                     String type = photo.getType();
-                    Log.d("dressyLogs", "filtering against: " + type);
                     if (type.equals(filterType)) {
                         filteredList.add(photo);
                     }
@@ -127,7 +125,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
             photosFiltered.clear();
             photosFiltered.addAll((List) results.values);
-            Log.d("dressyLogs", "size of filtered list: " + photosFiltered.size());
             notifyDataSetChanged();
         }
     };

@@ -15,11 +15,13 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.dressy.activities.Home.width;
+
 public class MyFavoritesRecyclerAdapter extends RecyclerView.Adapter<MyFavoritesRecyclerAdapter.ViewHolder> {
 
-    private List<ArrayList<String>> favorites = new ArrayList<>();
-    private LayoutInflater layoutInflater;
-    private ItemClickListener mClickListener;
+    private final List<ArrayList<String>> favorites;
+    private final LayoutInflater layoutInflater;
+    private final ItemClickListener mClickListener;
 
     public MyFavoritesRecyclerAdapter(Context context, ArrayList<ArrayList<String>> data, ItemClickListener mClickListener){
         this.layoutInflater = LayoutInflater.from(context);
@@ -37,11 +39,10 @@ public class MyFavoritesRecyclerAdapter extends RecyclerView.Adapter<MyFavorites
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         try {
-            Picasso.get().load(favorites.get(position).get(0)).resize(400, 640).centerInside().into((holder.imageView1));
-            Picasso.get().load(favorites.get(position).get(1)).resize(400, 640).centerInside().into((holder.imageView2));
-            Picasso.get().load(favorites.get(position).get(2)).resize(400, 640).centerInside().into((holder.imageView3));
-            Picasso.get().load(favorites.get(position).get(3)).resize(400, 640).centerInside().into((holder.imageView4));
-            Log.d("dressyLogs", "Attempted to fill with " + favorites);
+            Picasso.get().load(favorites.get(position).get(0)).resize(width, 333).centerInside().into((holder.imageView1));
+            Picasso.get().load(favorites.get(position).get(1)).resize(width, 333).centerInside().into((holder.imageView2));
+            Picasso.get().load(favorites.get(position).get(2)).resize(width, 333).centerInside().into((holder.imageView3));
+            Picasso.get().load(favorites.get(position).get(3)).resize(width, 333).centerInside().into((holder.imageView4));
         } catch (Exception error) {
             Log.d("dressyLogs", "error: " + error.getMessage());
             Log.d("dressyLogs", "Failed to fill position " + position);
@@ -50,10 +51,10 @@ public class MyFavoritesRecyclerAdapter extends RecyclerView.Adapter<MyFavorites
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public ImageView imageView1,imageView2, imageView3, imageView4;
-        MyFavoritesRecyclerAdapter.ItemClickListener itemClickListener;
+        final ImageView imageView1,imageView2, imageView3, imageView4;
+        final MyFavoritesRecyclerAdapter.ItemClickListener itemClickListener;
 
-        public ViewHolder(View itemView, MyFavoritesRecyclerAdapter.ItemClickListener itemClickListener) {
+        private ViewHolder(View itemView, MyFavoritesRecyclerAdapter.ItemClickListener itemClickListener) {
             super(itemView);
             imageView1 = itemView.findViewById(R.id.favorite_1);
             imageView2 = itemView.findViewById(R.id.favorite_2);

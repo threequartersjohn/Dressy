@@ -1,23 +1,22 @@
 package com.example.dressy.fragments;
 
 
-import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.dressy.R;
 import com.example.dressy.activities.Home;
+import com.github.nisrulz.sensey.Sensey;
+import com.github.nisrulz.sensey.ShakeDetector;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -33,30 +32,43 @@ import static com.example.dressy.activities.Home.user_id;
 
 public class homeFragment extends Fragment {
 
-    private String TAG = "dressyLogs";
+    private final String TAG = "dressyLogs";
     private ArrayList<ArrayList<String>> firstSelectedPhotos = new ArrayList<>();
+    private ShakeDetector.ShakeListener shakeListener;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Sensey.getInstance().init(getActivity());
+
         return inflater.inflate(R.layout.fragment_home, container, false);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Sensey.getInstance().stopShakeDetection(shakeListener);
     }
 
     @Override
     public void onStart() {
         super.onStart();
 
-        Button button = getActivity().findViewById(R.id.btnMudar);
-        button.setOnClickListener(new View.OnClickListener() {
+        shakeListener = new ShakeDetector.ShakeListener() {
             @Override
-            public void onClick(View v) {
+            public void onShakeDetected() {
+                Log.d(TAG, "shake detected!!!!!!!!");
                 showNewCombination();
             }
-        });
+
+            @Override
+            public void onShakeStopped() { }
+        };
+        Sensey.getInstance().startShakeDetection(shakeListener);
         new LoadPhotosIntoImageView().execute();
     }
 
-    public void showNewCombination(){
+    private void showNewCombination(){
         for(ArrayList<String>photo:firstSelectedPhotos){
             new File(photo.get(0)).delete();
         }
@@ -96,7 +108,7 @@ public class homeFragment extends Fragment {
         Log.d(TAG, "Photos should be loaded into view.");
     }
 
-    public void saveFavoriteCombination(){
+    private void saveFavoriteCombination(){
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         ArrayList<String> collection = new ArrayList<>();
 
