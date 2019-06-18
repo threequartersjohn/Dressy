@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class PasswordChange extends AppCompatActivity {
 
     private EditText txtName;
-    private Button btnSubmit, btnBack;
+    private Button btnSubmit;
     private FirebaseAuth auth;
 
     @Override
@@ -26,8 +26,8 @@ public class PasswordChange extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password_change);
 
-        txtName = (EditText) findViewById(R.id.txtName);
-        btnSubmit = (Button) findViewById(R.id.btnSubmit);
+        txtName = findViewById(R.id.txtName);
+        btnSubmit = findViewById(R.id.btnSubmit);
         //btnBack = (Button) findViewById(R.id.btnBack);
 
         auth = FirebaseAuth.getInstance();
