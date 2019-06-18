@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,7 +49,6 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
         //hides title bar (?)
         getSupportActionBar().hide();
 
-
         setContentView(R.layout.activity_login);
         //connect variables with layout
         txtEmail = findViewById(R.id.txtName);
@@ -72,7 +72,6 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                 startActivity(new Intent(Login.this, PasswordChange.class));
             }
         });
-
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,7 +120,6 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                 .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignIn)
                 .build();
 
-        signInButton = (SignInButton) findViewById(R.id.signInButton);
         signInButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -159,7 +157,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        Log.d("dressyLogs", connectionResult.getErrorMessage());
     }
 
     public void changeToPasswordRequest(View v){
