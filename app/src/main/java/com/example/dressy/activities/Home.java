@@ -22,6 +22,7 @@ import com.example.dressy.classes.Photo;
 import com.example.dressy.fragments.closetFragment;
 import com.example.dressy.fragments.favoritesFragment;
 import com.example.dressy.fragments.homeFragment;
+import com.google.android.gms.auth.api.Auth;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

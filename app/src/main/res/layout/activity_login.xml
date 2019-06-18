@@ -14,7 +14,7 @@
         android:layout_marginLeft="68dp"
         android:layout_marginEnd="68dp"
         android:layout_marginRight="68dp"
-        android:layout_marginBottom="14dp"
+        android:layout_marginBottom="44dp"
         android:background="@drawable/button_filled"
         android:text="Login"
         android:textColor="@android:color/background_light"
@@ -34,7 +34,7 @@
         android:layout_marginLeft="68dp"
         android:layout_marginEnd="68dp"
         android:layout_marginRight="68dp"
-        android:layout_marginBottom="51dp"
+        android:layout_marginBottom="44dp"
         android:background="@drawable/button_filled"
         android:text="Registo"
         android:textColor="@android:color/background_light"
@@ -53,7 +53,7 @@
         android:layout_marginLeft="68dp"
         android:layout_marginEnd="68dp"
         android:layout_marginRight="68dp"
-        android:layout_marginBottom="17dp"
+        android:layout_marginBottom="54dp"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/txtPasswordLabel"
@@ -73,28 +73,32 @@
         android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@+id/txtNovaPasswordLabel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPasswordLabel" />
 
     <TextView
         android:id="@+id/txtEmailLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:text="Email:"
         android:textSize="18sp"
         app:fontFamily="@font/weblysleekuil"
         app:layout_constraintBottom_toTopOf="@+id/txtName"
         app:layout_constraintStart_toStartOf="@+id/txtName"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/signInButton" />
 
     <TextView
         android:id="@+id/txtPasswordLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="42dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginBottom="25dp"
         android:text="Palavra passe:"
         android:textSize="18sp"
         app:fontFamily="@font/weblysleekuil"
-        app:layout_constraintBottom_toTopOf="@+id/txtNovaPasswordLabel"
+        app:layout_constraintBottom_toTopOf="@+id/txtPassword"
         app:layout_constraintStart_toStartOf="@+id/txtPassword"
         app:layout_constraintTop_toBottomOf="@+id/txtName" />
 
@@ -102,49 +106,35 @@
         android:id="@+id/txtNovaPasswordLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="17dp"
+        android:layout_marginBottom="30dp"
         android:clickable="true"
         android:onClick="changeToPasswordRequest"
         android:text="Esqueceu-se da sua palavra-passe?"
         app:fontFamily="@font/webly_sleek"
         app:layout_constraintBottom_toTopOf="@+id/btnLogin"
         app:layout_constraintEnd_toEndOf="@+id/txtPassword"
-        app:layout_constraintTop_toBottomOf="@+id/txtPasswordLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="357dp"
         android:layout_height="0dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="141dp"
+        android:layout_marginBottom="32dp"
         android:src="@drawable/logo_dressy"
+        app:layout_constraintBottom_toTopOf="@+id/signInButton"
+        app:layout_constraintEnd_toStartOf="@+id/signInButton"
+        app:layout_constraintStart_toStartOf="@+id/signInButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/signInButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="52dp"
+        android:layout_marginRight="52dp"
         app:layout_constraintBottom_toTopOf="@+id/txtEmailLabel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/iconFacebook"
-        android:layout_width="50dp"
-        android:layout_height="54dp"
-        android:layout_marginStart="152dp"
-        android:layout_marginLeft="152dp"
-        android:layout_marginTop="260dp"
-        android:src="@drawable/iconfacebook"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/iconTwitter"
-        android:layout_width="58dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="76dp"
-        android:layout_marginLeft="76dp"
-        android:layout_marginTop="260dp"
-        app:layout_constraintStart_toStartOf="@+id/iconFacebook"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icontwitter" />
-
+        app:layout_constraintEnd_toEndOf="@+id/txtName"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"></com.google.android.gms.common.SignInButton>
 
 </android.support.constraint.ConstraintLayout>
