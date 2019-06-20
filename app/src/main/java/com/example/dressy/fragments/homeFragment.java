@@ -42,8 +42,6 @@ public class homeFragment extends Fragment {
     private ArrayList<ArrayList<String>> firstSelectedPhotos = new ArrayList<>();
     private ShakeDetector.ShakeListener shakeListener;
     private View rootView;
-    private ImageButton logoutHome;
-    private Boolean isLoggedOut = false;
     private Boolean imagesLoaded = false;
 
     @Nullable
@@ -71,9 +69,11 @@ public class homeFragment extends Fragment {
         shakeListener = new ShakeDetector.ShakeListener() {
             @Override
             public void onShakeDetected() {
-                Log.d(TAG, "shake detected!!!!!!!!");
                 Log.d(TAG, String.valueOf(imagesLoaded));
-                if (imagesLoaded == true){
+                Log.d(TAG, "shake detected!!!!!!!!");
+                Log.d(TAG, "size: " + listOfCachedFiles.size());
+
+                if (listOfCachedFiles.size()>1){
                     showNewCombination();
                 };
             }
@@ -110,7 +110,17 @@ public class homeFragment extends Fragment {
 
     private void loadBitmapsIntoImageViews(){
 
-        imagesLoaded = true;
+        int size = listOfCachedFiles.size();
+
+        Log.d(TAG, "size: " + listOfCachedFiles.size());
+
+        if(size >1) {
+            imagesLoaded = true;
+        }
+
+        else {
+            imagesLoaded = false;
+        }
 
         ImageView imgPhoto1 = getActivity().findViewById(R.id.imgPhoto1);
         ImageView imgPhoto2 = getActivity().findViewById(R.id.imgPhoto2);
@@ -156,19 +166,16 @@ public class homeFragment extends Fragment {
     private class LoadPhotosIntoImageView extends AsyncTask<Void, Void, String>{
         @Override
         protected String doInBackground(Void... urls) {
-            if (isLoggedOut == false){
-
-                while(listOfCachedFiles.size()== 0){
-                    Log.d(TAG, listOfCachedFiles.toString());
-                    Log.d(TAG, "Files not loaded, waiting 1 second");
-                    try {
-                        TimeUnit.SECONDS.sleep(1);
-                    } catch(InterruptedException error) {
-                        Log.d(TAG, "[Waiting] Unexpected interruption while waiting: " + error.getMessage());
-                    }
+            while(listOfCachedFiles.size()== 0){
+                Log.d(TAG, listOfCachedFiles.toString());
+                Log.d(TAG, "Files not loaded, waiting 1 second");
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } catch(InterruptedException error) {
+                    Log.d(TAG, "[Waiting] Unexpected interruption while waiting: " + error.getMessage());
                 }
-                firstSelectedPhotos = listOfCachedFiles.get(0);
             }
+            firstSelectedPhotos = listOfCachedFiles.get(0);
             return null;
         }
 

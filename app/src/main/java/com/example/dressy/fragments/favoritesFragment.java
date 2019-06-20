@@ -32,15 +32,6 @@ public class favoritesFragment extends Fragment implements MyFavoritesRecyclerAd
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_favorites, container, false);
 
-        ImageView logout = rootView.findViewById(R.id.logout);
-
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getContext(), Login.class));
-            }
-        });
         return rootView;
     }
 

@@ -112,16 +112,6 @@ public class closetFragment extends Fragment implements MyRecyclerViewAdapter.It
             }
         });
 
-        ImageView logout = rootView.findViewById(R.id.logout);
-
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getContext(), Login.class));
-            }
-        });
-
         return rootView;
     }
 
