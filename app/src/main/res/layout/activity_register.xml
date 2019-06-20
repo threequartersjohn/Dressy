@@ -8,60 +8,69 @@
 
     <EditText
         android:id="@+id/txtPassword"
-        android:layout_width="wrap_content"
+        android:layout_width="323dp"
         android:layout_height="wrap_content"
-        android:autofillHints=""
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/txtRepeatPasswordLabel"
-        app:layout_constraintStart_toStartOf="@+id/txtPalavrapasseLabel"
-        app:layout_constraintTop_toBottomOf="@+id/txtPalavrapasseLabel" />
-
-    <EditText
-        android:id="@+id/txtRepeatPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="117dp"
         android:autofillHints=""
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/btnRegister"
-        app:layout_constraintStart_toStartOf="@+id/txtRepeatPasswordLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPalavrapasseLabel" />
+
+    <EditText
+        android:id="@+id/txtRepeatPassword"
+        android:layout_width="323dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtRepeatPasswordLabel" />
 
     <TextView
         android:id="@+id/txtRepeatPasswordLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="8dp"
         android:text="Repetir a palavra-passe:"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/txtRepeatPassword"
-        app:layout_constraintStart_toStartOf="@+id/txtPassword"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
 
     <TextView
         android:id="@+id/txtPalavrapasseLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="11dp"
         android:text="Palavra-passe"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/txtPassword"
-        app:layout_constraintStart_toStartOf="@+id/txtName"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmailLabel" />
+        app:layout_constraintStart_toStartOf="@+id/txtPassword"
+        app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
 
     <ImageView
         android:id="@+id/imgLogo"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="46dp"
-        android:layout_marginLeft="46dp"
-        android:layout_marginTop="45dp"
-        android:layout_marginEnd="46dp"
-        android:layout_marginRight="46dp"
+        android:layout_width="319dp"
+        android:layout_height="225dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:contentDescription="@string/imgLogo"
         android:src="@drawable/logo_dressy"
-        app:layout_constraintBottom_toTopOf="@+id/txtNameLabel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -70,56 +79,66 @@
         android:id="@+id/txtNameLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="49dp"
-        android:layout_marginLeft="49dp"
-        android:layout_marginBottom="38dp"
+        android:layout_marginTop="300dp"
         android:text="Nome:"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/txtEmailLabel"
-        app:layout_constraintStart_toStartOf="@+id/imgLogo"
-        app:layout_constraintTop_toBottomOf="@+id/imgLogo" />
+        app:layout_constraintBottom_toTopOf="@+id/txtName"
+        app:layout_constraintStart_toStartOf="@+id/txtName"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtEmailLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="42dp"
         android:text="Email:"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/txtPalavrapasseLabel"
-        app:layout_constraintStart_toStartOf="@+id/txtNameLabel"
-        app:layout_constraintTop_toBottomOf="@+id/txtNameLabel" />
+        app:layout_constraintBottom_toTopOf="@+id/txtEmail"
+        app:layout_constraintStart_toStartOf="@+id/txtEmail"
+        app:layout_constraintTop_toBottomOf="@+id/txtName" />
 
     <EditText
         android:id="@+id/txtName"
-        android:layout_width="307dp"
-        android:layout_height="44dp"
+        android:layout_width="323dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="19dp"
         android:autofillHints=""
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/txtEmailLabel"
-        app:layout_constraintStart_toStartOf="@+id/txtNameLabel" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtNameLabel" />
 
     <EditText
         android:id="@+id/txtEmail"
-        android:layout_width="305dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="3dp"
+        android:layout_width="323dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="11dp"
         android:autofillHints=""
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="@+id/txtEmailLabel"
+        app:layout_constraintBottom_toTopOf="@+id/txtPalavrapasseLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtEmailLabel" />
 
     <Button
         android:id="@+id/btnRegister"
-        android:layout_width="0dp"
+        android:layout_width="275dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="68dp"
         android:layout_marginLeft="68dp"
-        android:layout_marginEnd="68dp"
-        android:layout_marginRight="68dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="28dp"
         android:background="@drawable/button_filled"
         android:text="Registar"
         android:textColor="@android:color/background_light"
@@ -127,7 +146,8 @@
         app:fontFamily="@font/weblysleekuisb"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtRepeatPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
 
 </android.support.constraint.ConstraintLayout>

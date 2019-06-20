@@ -41,24 +41,16 @@ public class Register extends AppCompatActivity {
         txtRepeatPassword = findViewById(R.id.txtRepeatPassword);
 
 
-        //onclick btnReturn
-        //btnReturn.setOnClickListener(new View.OnClickListener() {
-            //@Override
-            //public void onClick(View v) {
-                //startActivity(new Intent(Register.this, Login.class));
-            //}
-        //});
-
         //onclick btnRegister
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 //variaveis
-                String name = txtName.getText().toString().trim();
-                String email = txtEmail.getText().toString().trim();
-                String password = txtPassword.getText().toString().trim();
-                String repeatPassword = txtRepeatPassword.getText().toString().trim();
+                final String name = txtName.getText().toString().trim();
+                final String email = txtEmail.getText().toString().trim();
+                final String password = txtPassword.getText().toString().trim();
+                final String repeatPassword = txtRepeatPassword.getText().toString().trim();
 
                 //Informaçoes para user
                 if(TextUtils.isEmpty(name)){
@@ -96,7 +88,9 @@ public class Register extends AppCompatActivity {
                             Toast.makeText(Register.this, "A autenticação falhou!" + task.getException(), Toast.LENGTH_LONG).show();
                         }
                         else{
-                        startActivity(new Intent(Register.this, Home.class));
+                            Intent intent = new Intent(Register.this, Home.class);
+                            intent.putExtra("user", email);
+                            startActivity(intent);
                     }
                     }
                 });

@@ -27,9 +27,11 @@ import android.widget.TextView;
 
 import com.example.dressy.R;
 import com.example.dressy.activities.Home;
+import com.example.dressy.activities.Login;
 import com.example.dressy.services.UploadNewItemPhoto;
 import com.example.dressy.util.MyRecyclerViewAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -107,6 +109,16 @@ public class closetFragment extends Fragment implements MyRecyclerViewAdapter.It
             @Override
             public void onClick(View v) {
                 filterItemsInList("");
+            }
+        });
+
+        ImageView logout = rootView.findViewById(R.id.logout);
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getContext(), Login.class));
             }
         });
 

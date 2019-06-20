@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="68dp"
         android:layout_marginLeft="68dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/button_filled"
         android:text="@string/login"
         android:textColor="@android:color/background_light"
@@ -28,7 +28,7 @@
 
         android:layout_marginStart="68dp"
         android:layout_marginLeft="68dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/button_filled"
         android:text="@string/registo"
         android:textColor="@android:color/background_light"
@@ -46,7 +46,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:ems="10"
-        android:hint="example@email.com"
+        android:hint="@string/example_email_com"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,7 +62,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:ems="10"
-        android:hint="secret"
+        android:hint="@string/secret"
         android:importantForAutofill="no"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
@@ -97,17 +97,18 @@
 
     <TextView
         android:id="@+id/txtNovaPasswordLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="245dp"
+        android:layout_height="31dp"
         android:layout_marginEnd="44dp"
         android:layout_marginRight="44dp"
         android:clickable="true"
+        android:focusable="true"
         android:onClick="changeToPasswordRequest"
         android:text="@string/esqueceu_se_da_sua_palavra_passe"
+        android:textSize="16sp"
         app:fontFamily="@font/webly_sleek"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPassword"
-        android:focusable="true" />
+        app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -115,7 +116,7 @@
         android:layout_height="225dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="36dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:contentDescription="@string/logo"

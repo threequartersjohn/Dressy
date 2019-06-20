@@ -1,6 +1,7 @@
 package com.example.dressy.fragments;
 
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,13 +11,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.dressy.R;
 import com.example.dressy.activities.Home;
+import com.example.dressy.activities.Login;
 import com.github.nisrulz.sensey.Sensey;
 import com.github.nisrulz.sensey.ShakeDetector;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -28,6 +33,7 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import static com.example.dressy.activities.Home.listOfCachedFiles;
+import static com.example.dressy.activities.Home.tasks;
 import static com.example.dressy.activities.Home.user_id;
 
 public class homeFragment extends Fragment {
@@ -35,12 +41,16 @@ public class homeFragment extends Fragment {
     private final String TAG = "dressyLogs";
     private ArrayList<ArrayList<String>> firstSelectedPhotos = new ArrayList<>();
     private ShakeDetector.ShakeListener shakeListener;
+    private View rootView;
+    private ImageButton logoutHome;
+    private Boolean isLoggedOut = false;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Sensey.getInstance().init(getActivity());
 
+        rootView = inflater.inflate(R.layout.fragment_home, container, false);
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -50,6 +60,8 @@ public class homeFragment extends Fragment {
         Sensey.getInstance().stopShakeDetection(shakeListener);
     }
 
+
+
     @Override
     public void onStart() {
         super.onStart();
@@ -58,14 +70,16 @@ public class homeFragment extends Fragment {
             @Override
             public void onShakeDetected() {
                 Log.d(TAG, "shake detected!!!!!!!!");
-                showNewCombination();
+                if (listOfCachedFiles.size()>=3){
+                    showNewCombination();
+                };
             }
 
             @Override
             public void onShakeStopped() { }
         };
         Sensey.getInstance().startShakeDetection(shakeListener);
-        new LoadPhotosIntoImageView().execute();
+        tasks.add(new LoadPhotosIntoImageView().execute()) ;
     }
 
     private void showNewCombination(){
@@ -137,17 +151,19 @@ public class homeFragment extends Fragment {
     private class LoadPhotosIntoImageView extends AsyncTask<Void, Void, String>{
         @Override
         protected String doInBackground(Void... urls) {
-            while(listOfCachedFiles.size()== 0){
-                Log.d(TAG, listOfCachedFiles.toString());
-                Log.d(TAG, "Files not loaded, waiting 1 second");
-                try {
-                    TimeUnit.SECONDS.sleep(1);
-                } catch(InterruptedException error) {
-                    Log.d(TAG, "[Waiting] Unexpected interruption while waiting: " + error.getMessage());
-                }
-            }
+            if (isLoggedOut == false){
 
-            firstSelectedPhotos = listOfCachedFiles.get(0);
+                while(listOfCachedFiles.size()== 0){
+                    Log.d(TAG, listOfCachedFiles.toString());
+                    Log.d(TAG, "Files not loaded, waiting 1 second");
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                    } catch(InterruptedException error) {
+                        Log.d(TAG, "[Waiting] Unexpected interruption while waiting: " + error.getMessage());
+                    }
+                }
+                firstSelectedPhotos = listOfCachedFiles.get(0);
+            }
             return null;
         }
 

@@ -19,4 +19,12 @@
     <string name="minimun_password">A password tem de ter mais de 6 caracteres!</string>
     <string name="auth_failed">Autenticação falhou!</string>
     <string name="web_client_key">52871640735-q3mkjg7u669var5v69h282gtpjpsoh4i.apps.googleusercontent.com</string>
+    <string name="login">Login</string>
+    <string name="email">Email:</string>
+    <string name="palavra_passe">Palavra passe:</string>
+    <string name="esqueceu_se_da_sua_palavra_passe">Esqueceu-se da sua palavra-passe?</string>
+    <string name="registo">Registo</string>
+    <string name="logo">logo</string>
+    <string name="example_email_com">example@email.com</string>
+    <string name="secret">secret</string>
 </resources>

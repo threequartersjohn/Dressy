@@ -153,12 +153,6 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
 
     }
 
-    private void goMainScreen() {
-         Intent intent = new Intent(this, Home.class);
-         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-         startActivity(intent);
-    }
-
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.d("dressyLogs", connectionResult.getErrorMessage());

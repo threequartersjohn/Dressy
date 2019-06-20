@@ -1,6 +1,7 @@
 package com.example.dressy.activities;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -57,6 +58,7 @@ public class Home extends AppCompatActivity {
     private final ArrayList<String> jacket = new ArrayList<>();
     private final ArrayList<String> shoes = new ArrayList<>();
     private final ArrayList<String> sweater = new ArrayList<>();
+    public static ArrayList<AsyncTask> tasks = new ArrayList<>();
 
     private ArrayList<String[]> categories = new ArrayList<>();
 
@@ -118,17 +120,6 @@ public class Home extends AppCompatActivity {
         user_id = intent.getStringExtra("user").substring(0, intent.getStringExtra("user").indexOf('@'));
 
         width = displayMetrics.widthPixels/4;
-
-        ImageView logout = (ImageView) findViewById(R.id.btnOptions);
-        logout.setOnClickListener(new View.OnClickListener() {
-                                      @Override
-                                      public void onClick(View v) {
-                                          logout();
-                                      }
-
-                                      ;
-                                  });
-
         //hides title bar
         getSupportActionBar().hide();
 
@@ -141,11 +132,16 @@ public class Home extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new homeFragment()).commit();
     }
 
-    public void logout(){
+    public void logout(View v){
+        Log.d(TAG, "Attempting logout");
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(Home.this, Login.class));
-
+        for(AsyncTask task:tasks){            task.cancel(true);
+        }
+        finish();
     }
+
+
 
     private ArrayList<String> selectRandomPhotos(){
         ArrayList<String> tempSelectedPhotos = new ArrayList();
