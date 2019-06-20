@@ -44,11 +44,13 @@ public class homeFragment extends Fragment {
     private View rootView;
     private ImageButton logoutHome;
     private Boolean isLoggedOut = false;
+    private Boolean imagesLoaded = false;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Sensey.getInstance().init(getActivity());
+
 
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
         return inflater.inflate(R.layout.fragment_home, container, false);
@@ -70,7 +72,8 @@ public class homeFragment extends Fragment {
             @Override
             public void onShakeDetected() {
                 Log.d(TAG, "shake detected!!!!!!!!");
-                if (listOfCachedFiles.size()>=3){
+                Log.d(TAG, String.valueOf(imagesLoaded));
+                if (imagesLoaded == true){
                     showNewCombination();
                 };
             }
@@ -99,6 +102,7 @@ public class homeFragment extends Fragment {
         }
         loadBitmapsIntoImageViews();
 
+
         ImageView favoriteButton = getActivity().findViewById(R.id.favoriteButton);
         favoriteButton.setImageResource(R.drawable.favorite_icon_empty);
 
@@ -106,6 +110,7 @@ public class homeFragment extends Fragment {
 
     private void loadBitmapsIntoImageViews(){
 
+        imagesLoaded = true;
 
         ImageView imgPhoto1 = getActivity().findViewById(R.id.imgPhoto1);
         ImageView imgPhoto2 = getActivity().findViewById(R.id.imgPhoto2);
