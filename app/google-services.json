@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "52871640735-6mjn32e18khi4as3j6ekr3nsqm8qa2vq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dressy",
+            "certificate_hash": "e7340bac83734a9b3dffe6c174fd83f63068e7fb"
+          }
+        },
+        {
           "client_id": "52871640735-mpm2vbu3oinc68ka4c52u6eo7o2l49h2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -36,7 +44,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "52871640735-6ocp6qengt3l7pkpr1n42vh73qovbsji.apps.googleusercontent.com",
+              "client_id": "52871640735-q3mkjg7u669var5v69h282gtpjpsoh4i.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -11,6 +11,8 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.example.dressy.R;
 import com.example.dressy.classes.Photo;
@@ -57,9 +59,6 @@ public class Home extends AppCompatActivity {
     private final ArrayList<String> sweater = new ArrayList<>();
 
     private ArrayList<String[]> categories = new ArrayList<>();
-
-    //public void logout(){
-    //}
 
     private void populateCategories(){
 
@@ -118,20 +117,20 @@ public class Home extends AppCompatActivity {
         Intent intent = getIntent();
         user_id = intent.getStringExtra("user").substring(0, intent.getStringExtra("user").indexOf('@'));
 
-
         width = displayMetrics.widthPixels/4;
+
+        ImageView logout = (ImageView) findViewById(R.id.btnOptions);
+        logout.setOnClickListener(new View.OnClickListener() {
+                                      @Override
+                                      public void onClick(View v) {
+                                          logout();
+                                      }
+
+                                      ;
+                                  });
 
         //hides title bar
         getSupportActionBar().hide();
-
-//        btnLogout = findViewById(R.id.btnLogout);
-//        btnLogout.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View v)  {
-//                Log.d(TAG, FirebaseAuth.getInstance().getCurrentUser().toString());
-//                FirebaseAuth.getInstance().signOut();
-//                startActivity(new Intent(Home.this, Login.class));
-//            }
-//        });
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child(user_id);
 
@@ -142,14 +141,21 @@ public class Home extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new homeFragment()).commit();
     }
 
+    public void logout(){
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(Home.this, Login.class));
+
+    }
 
     private ArrayList<String> selectRandomPhotos(){
-
         ArrayList<String> tempSelectedPhotos = new ArrayList();
         Random random = new Random();
 
         for(ArrayList<String> list: filesByCategory){
-            if (list.size()==1){
+            if (list.size()==0){
+                continue;
+            }
+            else if (list.size()==1){
                 tempSelectedPhotos.add(list.get(0));
             }
             else {
@@ -208,9 +214,7 @@ public class Home extends AppCompatActivity {
                     }
                 });
             }
-
         }
-
     }
 
     @Override

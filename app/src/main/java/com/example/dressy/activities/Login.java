@@ -18,10 +18,12 @@ import com.example.dressy.R;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -112,18 +114,17 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                     });
                 }
         });
-        GoogleSignInOptions googleSignIn = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
-        googleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this,this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignIn)
-                .build();
 
+        final GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
+
+        signInButton = findViewById(R.id.signInButton);
         signInButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+                Intent intent = googleSignInClient.getSignInIntent();
                 startActivityForResult(intent, SIGN_IN_CODE);
             }
         });
@@ -134,19 +135,22 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == SIGN_IN_CODE){
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            handleSignInResult(result);
+            Task<GoogleSignInAccount> account = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(account);
         }
     }
 
-    private void handleSignInResult(GoogleSignInResult result) {
-        if(result.isSuccess()){
-            goMainScreen();
-        }
-        else{
-            Toast.makeText(this, "You can't make login", Toast.LENGTH_LONG).show();
+    private void handleSignInResult(Task<GoogleSignInAccount> result) {
 
+        try{
+            GoogleSignInAccount account = result.getResult(ApiException.class);
+            Intent intent = new Intent(Login.this, Home.class);
+            intent.putExtra("user", account.getEmail());
+            startActivity(intent);
+        } catch (ApiException error) {
+            Log.d("dressyLogs", "[Google.SignIn] error logging in: " + error.getStatusCode());
         }
+
     }
 
     private void goMainScreen() {

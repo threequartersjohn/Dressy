@@ -18,4 +18,5 @@
     <string name="txtEmailLabel">TextView</string>
     <string name="minimun_password">A password tem de ter mais de 6 caracteres!</string>
     <string name="auth_failed">Autenticação falhou!</string>
+    <string name="web_client_key">52871640735-q3mkjg7u669var5v69h282gtpjpsoh4i.apps.googleusercontent.com</string>
 </resources>
